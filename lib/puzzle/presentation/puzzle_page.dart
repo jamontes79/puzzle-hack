@@ -22,7 +22,9 @@ class PuzzlePage extends StatelessWidget {
           ),
         ),
       child: Scaffold(
-        appBar: AppBar(),
+        appBar: AppBar(
+          title: const Text('Puzzle Challenge'),
+        ),
         body: const PuzzleView(
           image: image,
         ),

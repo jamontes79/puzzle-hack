@@ -21,7 +21,7 @@ class PuzzleViewNormalScreen extends StatelessWidget {
         } else {
           return Column(
             children: [
-              const PuzzleHeader(),
+              PuzzleHeader(level: state.level),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [

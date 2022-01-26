@@ -20,7 +20,7 @@ class PuzzleViewMobileScreen extends StatelessWidget {
         } else {
           return Column(
             children: [
-              const PuzzleHeader(),
+              PuzzleHeader(level: state.level),
               Stack(
                 children: [
                   Row(

@@ -8,6 +8,7 @@ class PuzzleState extends Equatable {
     this.tilesCorrect = 0,
     this.solved = false,
     this.loading = false,
+    this.level = 1,
   });
 
   final Puzzle puzzle;
@@ -16,6 +17,7 @@ class PuzzleState extends Equatable {
   final int tilesCorrect;
   final bool solved;
   final bool loading;
+  final int level;
   PuzzleState copyWith({
     Puzzle? puzzle,
     bool? canMakeMove,
@@ -23,6 +25,7 @@ class PuzzleState extends Equatable {
     int? tilesCorrect,
     bool? solved,
     bool? loading,
+    int? level,
   }) {
     return PuzzleState(
       puzzle: puzzle ?? this.puzzle,
@@ -31,6 +34,7 @@ class PuzzleState extends Equatable {
       tilesCorrect: tilesCorrect ?? this.tilesCorrect,
       solved: solved ?? this.solved,
       loading: loading ?? this.loading,
+      level: level ?? this.level,
     );
   }
 
@@ -42,5 +46,6 @@ class PuzzleState extends Equatable {
         tilesCorrect,
         solved,
         loading,
+        level,
       ];
 }

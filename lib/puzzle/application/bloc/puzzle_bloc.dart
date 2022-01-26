@@ -36,6 +36,7 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
     emit(
       state.copyWith(
         loading: true,
+        level: event.level,
       ),
     );
     final imageParts = await _cropImage.splitImage(
