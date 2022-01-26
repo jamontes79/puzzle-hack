@@ -6,8 +6,7 @@ import 'package:image/image.dart' as image;
 class CropImage {
   Future<List<Uint8List>> splitImage({
     required String assetName,
-    required int horizontalPieceCount,
-    required int verticalPieceCount,
+    required int pieceCount,
   }) async {
     final assetImageByteData =
         await rootBundle.load('assets/puzzles/$assetName');
@@ -15,12 +14,12 @@ class CropImage {
         image.decodeImage(assetImageByteData.buffer.asUint8List());
 
     if (baseSizeImage != null) {
-      final xLength = (baseSizeImage.width / horizontalPieceCount).round();
-      final yLength = (baseSizeImage.height / verticalPieceCount).round();
+      final xLength = (baseSizeImage.width / pieceCount).round();
+      final yLength = (baseSizeImage.height / pieceCount).round();
 
       final pieceList = <image.Image>[];
-      for (var y = 0; y < verticalPieceCount; y++) {
-        for (var x = 0; x < horizontalPieceCount; x++) {
+      for (var y = 0; y < pieceCount; y++) {
+        for (var x = 0; x < pieceCount; x++) {
           pieceList.add(
             image.copyCrop(
               baseSizeImage,

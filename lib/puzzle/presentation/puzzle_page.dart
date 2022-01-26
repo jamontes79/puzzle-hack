@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:puzzle/helpers/puzzle_size.dart';
 import 'package:puzzle/puzzle/application/bloc/puzzle_bloc.dart';
 import 'package:puzzle/puzzle/infrastructure/crop_image.dart';
 import 'package:puzzle/puzzle/presentation/puzzle_view/puzzle_responsive_view.dart';
@@ -10,17 +11,15 @@ class PuzzlePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     const image = 'caleta.png';
-    final width = MediaQuery.of(context).size.width;
-    late double puzzleSize;
-    if (width < 768) {
-      puzzleSize = 300;
-    } else {
-      puzzleSize = 600;
-    }
+    final puzzleSize = PuzzleSizes.getPuzzleSize(context);
     return BlocProvider(
       create: (BuildContext context) => PuzzleBloc(CropImage())
         ..add(
-          InitializePuzzle(image: image, dimension: 3, size: puzzleSize),
+          InitializePuzzle(
+            image: image,
+            level: 1,
+            size: puzzleSize,
+          ),
         ),
       child: Scaffold(
         appBar: AppBar(),

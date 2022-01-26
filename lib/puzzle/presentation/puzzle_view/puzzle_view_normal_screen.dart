@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:puzzle/helpers/puzzle_size.dart';
 import 'package:puzzle/puzzle/application/bloc/puzzle_bloc.dart';
 import 'package:puzzle/puzzle/presentation/puzzle_board/puzzle_board.dart';
 import 'package:puzzle/puzzle/presentation/puzzle_view/widgets/dash_logo.dart';
@@ -28,15 +29,13 @@ class PuzzleViewNormalScreen extends StatelessWidget {
                     children: [
                       PuzzleBoard(
                         puzzle: state.puzzle,
-                        boardSize: 620,
-                        tileSize: 600 / state.puzzle.getDimension(),
                       ),
                       Visibility(
                         visible: state.solved,
                         child: Container(
                           color: Colors.white70,
-                          width: 620,
-                          height: 620,
+                          width: PuzzleSizes.getBoardSize(context),
+                          height: PuzzleSizes.getBoardSize(context),
                           child: Center(
                             child: Text(
                               'Congratulations!!\nNext level is coming...',
@@ -64,8 +63,7 @@ class PuzzleViewNormalScreen extends StatelessWidget {
                             children: [
                               Text(
                                 'Number of movements: ${state.currentMoves}\n'
-                                'Tiles Correct: ${state.tilesCorrect}\n'
-                                'Solvable: ${state.puzzle.isSolvable() ? 'Yes' : 'No'}',
+                                'Tiles Correct: ${state.tilesCorrect}',
                                 style: const TextStyle().copyWith(
                                   fontSize: 18,
                                   color: Colors.blue,

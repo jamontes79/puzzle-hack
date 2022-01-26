@@ -25,6 +25,9 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
   }
 
   final CropImage _cropImage;
+  int _puzzleDimensionFromLevel(final int level) {
+    return level + 2;
+  }
 
   Future<FutureOr<void>> _onInitializePuzzle(
     InitializePuzzle event,
@@ -37,11 +40,10 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
     );
     final imageParts = await _cropImage.splitImage(
       assetName: event.image,
-      horizontalPieceCount: event.dimension,
-      verticalPieceCount: event.dimension,
+      pieceCount: _puzzleDimensionFromLevel(event.level),
     );
     final puzzle = state.puzzle.init(
-      dimension: event.dimension,
+      dimension: _puzzleDimensionFromLevel(event.level),
       imageParts: imageParts,
       size: event.size,
     );

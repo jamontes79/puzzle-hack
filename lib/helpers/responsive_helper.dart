@@ -4,19 +4,24 @@ enum Device { mobile, tablet, desktop }
 
 class ResponsiveHelper {
   static Device getDevice(BuildContext context) {
-    if (ResponsiveHelper.isMobile(context)) {
+    if (ResponsiveHelper._isMobile(context)) {
       return Device.mobile;
-    } else if (ResponsiveHelper.isTablet(context)) {
+    } else if (ResponsiveHelper._isTablet(context)) {
       return Device.tablet;
     }
     return Device.desktop;
   }
 
-  static bool isMobile(BuildContext context) {
-    return MediaQuery.of(context).size.width < 540;
+  static bool _isMobile(BuildContext context) {
+    return MediaQuery.of(context).size.width < 700;
   }
 
-  static bool isTablet(BuildContext context) {
-    return MediaQuery.of(context).size.width < 700;
+  static bool _isTablet(BuildContext context) {
+    return MediaQuery.of(context).size.width < 800;
+  }
+
+  static bool isHorizontal(BuildContext context) {
+    return MediaQuery.of(context).size.width >
+        MediaQuery.of(context).size.height;
   }
 }

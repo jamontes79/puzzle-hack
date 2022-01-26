@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:puzzle/helpers/puzzle_size.dart';
 import 'package:puzzle/puzzle/domain/models/puzzle.dart';
 import 'package:puzzle/puzzle/presentation/puzzle_board/basic_tile.dart';
 import 'package:puzzle/puzzle/presentation/puzzle_board/movable_tile.dart';
@@ -8,16 +9,18 @@ class PuzzleBoard extends StatelessWidget {
   const PuzzleBoard({
     Key? key,
     required this.puzzle,
-    required this.boardSize,
-    required this.tileSize,
   }) : super(key: key);
-  final double boardSize;
-  final double tileSize;
+
   final Puzzle puzzle;
   int _getPositionInList(int dimension, int x, int y) => (dimension * x) + y;
   @override
   Widget build(BuildContext context) {
     final dimension = puzzle.getDimension();
+    final boardSize = PuzzleSizes.getBoardSize(context);
+    final tileSize = PuzzleSizes.getTileSize(
+      context,
+      dimension,
+    );
     return SizedBox(
       width: boardSize,
       height: boardSize,

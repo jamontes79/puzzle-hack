@@ -23,10 +23,14 @@ class PuzzleViewMobileScreen extends StatelessWidget {
               const PuzzleHeader(),
               Stack(
                 children: [
-                  PuzzleBoard(
-                    puzzle: state.puzzle,
-                    boardSize: 320,
-                    tileSize: 300 / state.puzzle.getDimension(),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      PuzzleBoard(
+                        puzzle: state.puzzle,
+                      ),
+                      const DashLogo(size: 130),
+                    ],
                   ),
                   Visibility(
                     visible: state.solved,
@@ -49,7 +53,6 @@ class PuzzleViewMobileScreen extends StatelessWidget {
                 ],
               ),
               SizedBox(
-                height: 320,
                 child: Padding(
                   padding: const EdgeInsets.all(20),
                   child: Column(
@@ -83,12 +86,6 @@ class PuzzleViewMobileScreen extends StatelessWidget {
                         ],
                       ),
                       const ShuffleButton(),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: const [
-                          DashLogo(size: 130),
-                        ],
-                      ),
                     ],
                   ),
                 ),
