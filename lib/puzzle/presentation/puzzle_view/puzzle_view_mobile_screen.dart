@@ -8,9 +8,8 @@ import 'package:puzzle/puzzle/presentation/puzzle_view/widgets/puzzle_header.dar
 import 'package:puzzle/puzzle/presentation/puzzle_view/widgets/suffle_button.dart';
 
 class PuzzleViewMobileScreen extends StatelessWidget {
-  const PuzzleViewMobileScreen({Key? key, required this.image})
-      : super(key: key);
-  final String image;
+  const PuzzleViewMobileScreen({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<PuzzleBloc, PuzzleState>(
@@ -21,35 +20,13 @@ class PuzzleViewMobileScreen extends StatelessWidget {
           return Column(
             children: [
               PuzzleHeader(level: state.level),
-              Stack(
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      PuzzleBoard(
-                        puzzle: state.puzzle,
-                      ),
-                      const DashLogo(size: 130),
-                    ],
+                  PuzzleBoard(
+                    puzzle: state.puzzle,
                   ),
-                  Visibility(
-                    visible: state.solved,
-                    child: Container(
-                      color: Colors.white70,
-                      width: 320,
-                      height: 320,
-                      child: Center(
-                        child: Text(
-                          'Congratulations!!\nNext level is coming...',
-                          textAlign: TextAlign.center,
-                          style: const TextStyle().copyWith(
-                            fontSize: 24,
-                            color: Colors.blue,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
+                  const DashLogo(size: 130),
                 ],
               ),
               SizedBox(
@@ -68,18 +45,8 @@ class PuzzleViewMobileScreen extends StatelessWidget {
                               color: Colors.blue,
                             ),
                           ),
-                          Visibility(
-                            visible: state.solved,
-                            child: Text(
-                              'Solved',
-                              style: const TextStyle().copyWith(
-                                fontSize: 18,
-                                color: Colors.blue,
-                              ),
-                            ),
-                          ),
                           Image.asset(
-                            'assets/puzzles/$image',
+                            'assets/puzzles/${state.puzzle.image}',
                             width: 100,
                             height: 100,
                           ),

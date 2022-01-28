@@ -4,20 +4,16 @@ import 'package:puzzle/puzzle/presentation/puzzle_view/puzzle_view_mobile_screen
 import 'package:puzzle/puzzle/presentation/puzzle_view/puzzle_view_normal_screen.dart';
 
 class PuzzleResponsiveView extends StatelessWidget {
-  const PuzzleResponsiveView({Key? key, required this.image}) : super(key: key);
-  final String image;
+  const PuzzleResponsiveView({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     final device = ResponsiveHelper.getDevice(context);
 
     if (device == Device.mobile) {
-      return PuzzleViewMobileScreen(
-        image: image,
-      );
+      return const PuzzleViewMobileScreen();
     } else {
-      return PuzzleViewNormalScreen(
-        image: image,
-      );
+      return const PuzzleViewNormalScreen();
     }
   }
 }

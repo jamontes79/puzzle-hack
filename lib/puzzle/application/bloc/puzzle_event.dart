@@ -7,18 +7,16 @@ abstract class PuzzleEvent extends Equatable {
 class InitializePuzzle extends PuzzleEvent {
   const InitializePuzzle({
     required this.level,
-    required this.image,
     required this.size,
   });
 
   final int level;
   final double size;
-  final String image;
+
   @override
   List<Object?> get props => [
         level,
         size,
-        image,
       ];
 }
 

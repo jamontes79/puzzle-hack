@@ -8,6 +8,7 @@ import 'package:puzzle/puzzle/domain/models/tile_puzzle.dart';
 
 class Puzzle extends Equatable {
   const Puzzle({
+    required this.image,
     required this.tiles,
     this.tilesCorrect = 0,
     required this.size,
@@ -16,6 +17,7 @@ class Puzzle extends Equatable {
   final List<TilePuzzle> tiles;
   final int tilesCorrect;
   final double size;
+  final String image;
   Puzzle shuffle() {
     final dimension = getDimension();
     final shuffledTiles = <TilePuzzle>[];
@@ -64,6 +66,7 @@ class Puzzle extends Equatable {
     required int dimension,
     required List<Uint8List> imageParts,
     required double size,
+    required String image,
   }) {
     final tiles = <TilePuzzle>[];
     for (var i = 0; i < dimension; i++) {
@@ -89,6 +92,7 @@ class Puzzle extends Equatable {
     return copyWith(
       tiles: tiles,
       tilesCorrect: numberOfTilesCorrect.length,
+      image: image,
     );
   }
 
@@ -96,8 +100,10 @@ class Puzzle extends Equatable {
     List<TilePuzzle>? tiles,
     int? tilesCorrect,
     double? size,
+    String? image,
   }) {
     return Puzzle(
+      image: image ?? this.image,
       tiles: tiles ?? this.tiles,
       tilesCorrect: tilesCorrect ?? this.tilesCorrect,
       size: size ?? this.size,

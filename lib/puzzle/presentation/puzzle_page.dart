@@ -1,3 +1,4 @@
+import 'package:cool_alert/cool_alert.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:puzzle/helpers/puzzle_size.dart';
@@ -10,13 +11,11 @@ class PuzzlePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const image = 'caleta.png';
     final puzzleSize = PuzzleSizes.getPuzzleSize(context);
     return BlocProvider(
       create: (BuildContext context) => PuzzleBloc(CropImage())
         ..add(
           InitializePuzzle(
-            image: image,
             level: 1,
             size: puzzleSize,
           ),
@@ -25,17 +24,15 @@ class PuzzlePage extends StatelessWidget {
         appBar: AppBar(
           title: const Text('Puzzle Challenge'),
         ),
-        body: const PuzzleView(
-          image: image,
-        ),
+        body: const PuzzleView(),
       ),
     );
   }
 }
 
 class PuzzleView extends StatelessWidget {
-  const PuzzleView({Key? key, required this.image}) : super(key: key);
-  final String image;
+  const PuzzleView({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,9 +44,25 @@ class PuzzleView extends StatelessWidget {
                     const ShufflePuzzle(),
                   ),
             );
+          } else if (state.solved) {
+            CoolAlert.show(
+              context: context,
+              type: CoolAlertType.success,
+              text:
+                  "Level ${state.level} completed! Let's go to the next level!",
+              onConfirmBtnTap: () {
+                Navigator.of(context, rootNavigator: true).pop();
+                context.read<PuzzleBloc>().add(
+                      InitializePuzzle(
+                        level: state.level + 1,
+                        size: PuzzleSizes.getPuzzleSize(context),
+                      ),
+                    );
+              },
+            );
           }
         },
-        child: PuzzleResponsiveView(image: image),
+        child: const PuzzleResponsiveView(),
       ),
     );
   }

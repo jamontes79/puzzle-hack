@@ -14,6 +14,7 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
       : super(
           const PuzzleState(
             puzzle: Puzzle(
+              image: '',
               tiles: [],
               size: 600,
             ),
@@ -26,7 +27,23 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
 
   final CropImage _cropImage;
   int _puzzleDimensionFromLevel(final int level) {
-    return level + 2;
+    return level + 1;
+  }
+
+  String _puzzleImageFromLevel(final int level) {
+    late String image;
+    switch (level) {
+      case 1:
+        image = 'caleta.png';
+        break;
+      case 2:
+        image = 'dash.png';
+        break;
+      case 3:
+        image = 'dash2.png';
+        break;
+    }
+    return image;
   }
 
   Future<FutureOr<void>> _onInitializePuzzle(
@@ -37,16 +54,18 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
       state.copyWith(
         loading: true,
         level: event.level,
+        solved: false,
       ),
     );
     final imageParts = await _cropImage.splitImage(
-      assetName: event.image,
+      assetName: _puzzleImageFromLevel(event.level),
       pieceCount: _puzzleDimensionFromLevel(event.level),
     );
     final puzzle = state.puzzle.init(
       dimension: _puzzleDimensionFromLevel(event.level),
       imageParts: imageParts,
       size: event.size,
+      image: _puzzleImageFromLevel(event.level),
     );
     var puzzleShuffle = puzzle.shuffle();
     while (!puzzleShuffle.isSolvable()) {
