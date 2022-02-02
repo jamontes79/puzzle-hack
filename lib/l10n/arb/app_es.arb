@@ -1,7 +1,9 @@
 {
     "@@locale": "es",
-    "counterAppBarTitle": "Contador",
-    "@counterAppBarTitle": {
-        "description": "Texto mostrado en la AppBar de la página del contador"
-    }
+    "loginAppBarTitle": "Puzzle Hack",
+    "loginFormEmail":  "E-mail",
+    "loginFormPassword": "Contraseña",
+    "loginFormButton" : "Entrar",
+    "loginFormGoogleButton" : "Entrar con Google",
+    "loginFormRegisterLink" : "¿No tienes una cuenta todavía? Pincha aqui para crear una."
 }

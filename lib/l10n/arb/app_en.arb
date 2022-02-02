@@ -1,7 +1,9 @@
 {
     "@@locale": "en",
-    "counterAppBarTitle": "Counter",
-    "@counterAppBarTitle": {
-        "description": "Text shown in the AppBar of the Counter Page"
-    }
+    "loginAppBarTitle": "Puzzle Hack",
+    "loginFormEmail":  "E-mail",
+    "loginFormPassword": "Password",
+    "loginFormButton" : "Login",
+    "loginFormGoogleButton" : "Sign In with Google",
+    "loginFormRegisterLink" : "You don't have an account yet? Click here to register."
 }

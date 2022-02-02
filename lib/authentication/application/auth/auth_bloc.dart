@@ -1,0 +1,42 @@
+import 'dart:async';
+
+import 'package:bloc/bloc.dart';
+import 'package:equatable/equatable.dart';
+import 'package:injectable/injectable.dart';
+import 'package:puzzle/authentication/domain/usecases/i_auth.dart';
+
+part 'auth_event.dart';
+part 'auth_state.dart';
+
+@injectable
+class AuthBloc extends Bloc<AuthEvent, AuthState> {
+  AuthBloc(this._auth) : super(const Unauthenticated()) {
+    on<CheckStatus>(_onCheckStatus);
+    on<Logout>(_onLogout);
+  }
+  final IAuth _auth;
+
+  FutureOr<void> _onCheckStatus(
+    CheckStatus event,
+    Emitter<AuthState> emit,
+  ) {
+    _auth.getSignedUser().fold(
+          (failure) => emit(
+            const Unauthenticated(),
+          ),
+          (user) => emit(
+            const Authenticated(),
+          ),
+        );
+  }
+
+  Future<FutureOr<void>> _onLogout(
+    Logout event,
+    Emitter<AuthState> emit,
+  ) async {
+    await _auth.logout();
+    emit(
+      const Unauthenticated(),
+    );
+  }
+}

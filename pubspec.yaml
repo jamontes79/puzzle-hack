@@ -8,20 +8,29 @@ environment:
 
 dependencies:
   bloc: ^8.0.2
+  build_runner: ^2.1.7
+  cloud_firestore: ^3.1.7
   cool_alert: ^1.1.0
+  dartz: ^0.10.1
   equatable: ^2.0.3
+  firebase_auth: ^3.3.6
+  firebase_core: ^1.12.0
   flutter:
     sdk: flutter
   flutter_bloc: ^8.0.1
   flutter_localizations:
     sdk: flutter
+  get_it: ^7.2.0
+  google_sign_in: ^5.2.3
   image: ^3.1.1
+  injectable: ^1.5.3
   intl: ^0.17.0
 
 dev_dependencies:
   bloc_test: ^9.0.2
   flutter_test:
     sdk: flutter
+  injectable_generator: ^1.5.3
   mocktail: ^0.2.0
   very_good_analysis: ^2.4.0
 

@@ -5,9 +5,20 @@
 // license that can be found in the LICENSE file or at
 // https://opensource.org/licenses/MIT.
 
+import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/material.dart';
+import 'package:injectable/injectable.dart';
 import 'package:puzzle/app/app.dart';
 import 'package:puzzle/bootstrap.dart';
+import 'package:puzzle/firebase_options.dart';
+import 'package:puzzle/injection/injection.dart';
 
-void main() {
-  bootstrap(() => const App());
+Future<void> main() async {
+  configureInjection(Environment.prod);
+
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  await bootstrap(() => const App());
 }

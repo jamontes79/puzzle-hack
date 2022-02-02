@@ -76,6 +76,7 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
         puzzle: puzzleShuffle,
         tilesCorrect: puzzleShuffle.tilesCorrect,
         loading: false,
+        currentMoves: 0,
       ),
     );
   }
