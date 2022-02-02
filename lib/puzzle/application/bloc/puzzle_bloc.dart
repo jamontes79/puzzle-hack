@@ -37,7 +37,7 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
         image = 'caleta.png';
         break;
       case 2:
-        image = 'dash.png';
+        image = 'dart.png';
         break;
       case 3:
         image = 'dash2.png';
