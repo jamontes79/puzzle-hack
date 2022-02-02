@@ -5,5 +5,14 @@
     "loginFormPassword": "Contraseña",
     "loginFormButton" : "Entrar",
     "loginFormGoogleButton" : "Entrar con Google",
-    "loginFormRegisterLink" : "¿No tienes una cuenta todavía? Pincha aqui para crear una."
+    "loginFormRegisterLink" : "¿No tienes una cuenta todavía? Pincha aqui para crear una.",
+
+    "registerFormEmail":  "E-mail",
+    "registerFormPassword": "Contraseña",
+    "registerFormRepeatPassword": "Confirma Contraseña",
+    "registerFormButton" : "Regístrate",
+    "registerFormLoginLink": "¿Ya tienes una cuenta? Entra aqui",
+    "registerFormEmailError":  "E-mail no válido",
+    "registerFormPasswordError":  "Contraseña no válida",
+    "registerFormPasswordEqualError":  "Las constraseñas no coinciden"
 }

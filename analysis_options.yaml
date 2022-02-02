@@ -3,7 +3,7 @@ analyzer:
   exclude:
     - lib/**/*.freezed.dart
     - lib/**/*.g.dart
-    - lib/ui/di/injection.config.dart
+    - lib/injection/injection.config.dart
 linter:
   rules:
     public_member_api_docs: false

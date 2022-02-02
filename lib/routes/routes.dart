@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:puzzle/authentication/presentation/login_page.dart';
+import 'package:puzzle/authentication/presentation/register_page.dart';
 import 'package:puzzle/core/presentation/splash_page.dart';
 import 'package:puzzle/puzzle/presentation/puzzle_page.dart';
 
@@ -23,7 +24,7 @@ class RouteGenerator {
             key: Key('login_page'),
           ),
         );
-      /*
+
       case registerPage:
         return MaterialPageRoute(
           builder: (_) => const RegisterPage(
@@ -31,7 +32,6 @@ class RouteGenerator {
           ),
         );
 
-         */
       case mainPage:
         return MaterialPageRoute(
           builder: (_) => const PuzzlePage(

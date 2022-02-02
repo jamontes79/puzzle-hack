@@ -5,7 +5,7 @@ import 'package:injectable/injectable.dart';
 import 'package:puzzle/authentication/domain/failures/failures.dart';
 import 'package:puzzle/authentication/domain/models/puzzle_user.dart';
 import 'package:puzzle/authentication/domain/usecases/i_login.dart';
-import 'package:puzzle/core/domain/failures.dart';
+import 'package:puzzle/core/domain/failures/failures.dart';
 
 @LazySingleton(as: ILogin)
 class LoginRepository implements ILogin {

@@ -1,46 +1,54 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:puzzle/authentication/application/login/login_bloc.dart';
+import 'package:puzzle/authentication/application/register/register_bloc.dart';
 import 'package:puzzle/injection/injection.dart';
 import 'package:puzzle/l10n/l10n.dart';
 import 'package:puzzle/routes/routes.dart';
 
-class LoginPage extends StatelessWidget {
-  const LoginPage({Key? key}) : super(key: key);
+class RegisterPage extends StatelessWidget {
+  const RegisterPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => getIt<LoginBloc>(),
-      child: const LoginView(
+      create: (_) => getIt<RegisterBloc>(),
+      child: const RegisterView(
         key: Key('login_view'),
       ),
     );
   }
 }
 
-class LoginView extends StatelessWidget {
-  const LoginView({Key? key}) : super(key: key);
+class RegisterView extends StatelessWidget {
+  const RegisterView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
     final _emailTextController = TextEditingController();
     final _passwordTextController = TextEditingController();
-    _emailTextController.addListener(
-      () {
-        context.read<LoginBloc>().add(
-              EmailChanged(_emailTextController.value.text),
-            );
-      },
-    );
-    _passwordTextController.addListener(
-      () {
-        context.read<LoginBloc>().add(
-              PasswordChanged(_passwordTextController.value.text),
-            );
-      },
-    );
+    final _confirmPasswordTextController = TextEditingController();
+    _emailTextController.addListener(() {
+      context.read<RegisterBloc>().add(
+            EmailChanged(_emailTextController.value.text),
+          );
+    });
+    _passwordTextController.addListener(() {
+      context.read<RegisterBloc>().add(
+            PasswordChanged(
+              password: _passwordTextController.value.text,
+              confirmPassword: _confirmPasswordTextController.value.text,
+            ),
+          );
+    });
+    _confirmPasswordTextController.addListener(() {
+      context.read<RegisterBloc>().add(
+            ConfirmPasswordChanged(
+              password: _passwordTextController.value.text,
+              confirmPassword: _confirmPasswordTextController.value.text,
+            ),
+          );
+    });
     return Scaffold(
       body: Container(
         decoration: const BoxDecoration(
@@ -50,16 +58,17 @@ class LoginView extends StatelessWidget {
             fit: BoxFit.fitHeight,
           ),
         ),
-        child: BlocConsumer<LoginBloc, LoginState>(
+        child: BlocConsumer<RegisterBloc, RegisterState>(
           listener: (context, state) {
             if (state.error) {
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(
-                  content: Text('Login error!'),
+                  content: Text('Register error!'),
                   duration: Duration(seconds: 2),
                 ),
               );
-            } else if (state.successful) {
+            }
+            if (state.successful) {
               Navigator.of(context).pushReplacementNamed(
                 RouteGenerator.mainPage,
               );
@@ -67,6 +76,7 @@ class LoginView extends StatelessWidget {
           },
           builder: (context, state) {
             return Form(
+              autovalidateMode: AutovalidateMode.always,
               child: Center(
                 child: Container(
                   decoration: BoxDecoration(
@@ -74,7 +84,7 @@ class LoginView extends StatelessWidget {
                     borderRadius: BorderRadius.circular(8),
                   ),
                   width: 500,
-                  height: 500,
+                  height: 550,
                   child: Padding(
                     padding: const EdgeInsets.all(20),
                     child: ListView(
@@ -82,40 +92,70 @@ class LoginView extends StatelessWidget {
                         Text(
                           l10n.loginAppBarTitle,
                           textAlign: TextAlign.center,
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 80,
-                            color: Theme.of(context).primaryColor,
+                            color: Colors.lightBlue,
                           ),
                         ),
                         const SizedBox(
                           height: 60,
                         ),
                         TextFormField(
-                          key: const Key('loginpage_email_field'),
+                          key: const Key('registerpage_email_field'),
                           controller: _emailTextController,
                           decoration: InputDecoration(
                             prefixIcon: const Icon(Icons.email),
-                            labelText: l10n.loginFormEmail,
+                            labelText: l10n.registerFormEmail,
                           ),
                           keyboardType: TextInputType.emailAddress,
+                          validator: (value) {
+                            if (state.errorEmail) {
+                              return l10n.registerFormEmailError;
+                            }
+                            return null;
+                          },
                         ),
                         const SizedBox(
                           height: 20,
                         ),
                         TextFormField(
-                          key: const Key('loginpage_password_field'),
+                          key: const Key('registerpage_password_field'),
                           controller: _passwordTextController,
                           obscureText: true,
                           decoration: InputDecoration(
                             prefixIcon: const Icon(Icons.lock_outline),
-                            labelText: l10n.loginFormPassword,
+                            labelText: l10n.registerFormPassword,
                           ),
+                          validator: (value) {
+                            if (state.errorPassword) {
+                              return l10n.registerFormPasswordError;
+                            }
+                            return null;
+                          },
+                        ),
+                        const SizedBox(
+                          height: 40,
+                        ),
+                        TextFormField(
+                          key: const Key('registerpage_confirm_password_field'),
+                          controller: _confirmPasswordTextController,
+                          obscureText: true,
+                          decoration: InputDecoration(
+                            prefixIcon: const Icon(Icons.lock_outline),
+                            labelText: l10n.registerFormRepeatPassword,
+                          ),
+                          validator: (value) {
+                            if (state.errorConfirmPassword) {
+                              return l10n.registerFormPasswordEqualError;
+                            }
+                            return null;
+                          },
                         ),
                         const SizedBox(
                           height: 40,
                         ),
                         ElevatedButton(
-                          key: const Key('loginpage_login_button'),
+                          key: const Key('registerpage_register_button'),
                           style: ButtonStyle(
                             backgroundColor: MaterialStateProperty.all<Color>(
                               Theme.of(context).primaryColor,
@@ -127,57 +167,29 @@ class LoginView extends StatelessWidget {
                             ),
                           ),
                           onPressed: () {
-                            context.read<LoginBloc>().add(
-                                  const AttemptLogin(),
+                            context.read<RegisterBloc>().add(
+                                  const AttemptRegister(),
                                 );
                           },
                           child: Text(
-                            l10n.loginFormButton,
+                            l10n.registerFormButton,
                             style: const TextStyle(
                               color: Colors.white,
                             ),
                           ),
-                        ),
-                        Visibility(
-                          visible: state.validating,
-                          child: const LinearProgressIndicator(),
                         ),
                         const SizedBox(
                           height: 20,
                         ),
-                        ElevatedButton(
-                          key: const Key('loginpage_glogin_button'),
-                          style: ButtonStyle(
-                            backgroundColor: MaterialStateProperty.all<Color>(
-                              Colors.red,
-                            ),
-                            shape: MaterialStateProperty.all<OutlinedBorder>(
-                              RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                            ),
-                          ),
-                          onPressed: () {
-                            context.read<LoginBloc>().add(
-                                  const AttemptLoginWithGoogle(),
-                                );
-                          },
-                          child: Text(
-                            l10n.loginFormGoogleButton,
-                            style: const TextStyle(
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
                         TextButton(
-                          key: const Key('loginpage_register_link'),
+                          key: const Key('registerpage_login_link'),
                           onPressed: () {
                             Navigator.of(context).pushReplacementNamed(
-                              RouteGenerator.registerPage,
+                              RouteGenerator.loginPage,
                             );
                           },
                           child: Text(
-                            l10n.loginFormRegisterLink,
+                            l10n.registerFormLoginLink,
                             style: const TextStyle(
                               color: Colors.black,
                             ),

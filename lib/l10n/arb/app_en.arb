@@ -5,5 +5,15 @@
     "loginFormPassword": "Password",
     "loginFormButton" : "Login",
     "loginFormGoogleButton" : "Sign In with Google",
-    "loginFormRegisterLink" : "You don't have an account yet? Click here to register."
+    "loginFormRegisterLink" : "You don't have an account yet? Click here to register.",
+
+    "registerFormEmail":  "E-mail",
+    "registerFormPassword": "Password",
+    "registerFormRepeatPassword": "Confirm Password",
+    "registerFormButton" : "Register",
+    "registerFormLoginLink": "Already have an account? Log-in.",
+    "registerFormEmailError":  "E-mail not valid",
+    "registerFormPasswordError":  "Password not valid",
+    "registerFormPasswordEqualError":  "Passwords are not equals"
+
 }
