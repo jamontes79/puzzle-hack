@@ -4,7 +4,7 @@
     "loginFormEmail":  "E-mail",
     "loginFormPassword": "Password",
     "loginFormButton" : "Login",
-    "loginFormGoogleButton" : "Sign In with Google",
+    "loginFormGoogleButton" : "Enter as guess",
     "loginFormRegisterLink" : "You don't have an account yet? Click here to register.",
 
     "registerFormEmail":  "E-mail",
@@ -14,6 +14,16 @@
     "registerFormLoginLink": "Already have an account? Log-in.",
     "registerFormEmailError":  "E-mail not valid",
     "registerFormPasswordError":  "Password not valid",
-    "registerFormPasswordEqualError":  "Passwords are not equals"
+    "registerFormPasswordEqualError":  "Passwords are not equals",
 
+    "logoutQuestionTitle": "Attention!",
+    "logoutQuestionText": "Are you sure to logout?",
+    "logoutOkButton": "Ok",
+    "logoutCancelButton": "Cancel",
+
+    "settingsText": "Settings",
+    "settingsShortCuts": "Use keyboard",
+    "settingsVoiceCommand": "Voice commands",
+    "settingsDarkMode": "Dark mode"
+   
 }

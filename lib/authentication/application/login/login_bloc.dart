@@ -14,7 +14,6 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     on<EmailChanged>(_onEmailChanged);
     on<PasswordChanged>(_onPasswordChanged);
     on<AttemptLogin>(_onAttemptLogin);
-    on<AttemptLoginWithGoogle>(_onAttemptLoginWithGoogle);
   }
   final ILogin _login;
   FutureOr<void> _onEmailChanged(
@@ -58,35 +57,6 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       state.email,
       state.password,
     );
-
-    failureOrLogin.fold(
-      (l) => emit(
-        state.copyWith(
-          validating: false,
-          error: true,
-          successful: false,
-        ),
-      ),
-      (r) => emit(
-        state.copyWith(
-          validating: false,
-          error: false,
-          successful: true,
-        ),
-      ),
-    );
-  }
-
-  Future<FutureOr<void>> _onAttemptLoginWithGoogle(
-    AttemptLoginWithGoogle event,
-    Emitter<LoginState> emit,
-  ) async {
-    emit(
-      state.copyWith(
-        validating: true,
-      ),
-    );
-    final failureOrLogin = await _login.doLoginWithGoogle();
 
     failureOrLogin.fold(
       (l) => emit(

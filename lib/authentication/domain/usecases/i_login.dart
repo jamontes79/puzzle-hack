@@ -7,5 +7,4 @@ abstract class ILogin {
     String email,
     String password,
   );
-  Future<Either<Failure, PuzzleUser>> doLoginWithGoogle();
 }

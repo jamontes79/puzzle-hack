@@ -1,10 +1,14 @@
 import 'package:cool_alert/cool_alert.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:puzzle/authentication/application/auth/auth_bloc.dart';
 import 'package:puzzle/helpers/puzzle_size.dart';
+import 'package:puzzle/l10n/l10n.dart';
 import 'package:puzzle/puzzle/application/bloc/puzzle_bloc.dart';
 import 'package:puzzle/puzzle/infrastructure/crop_image.dart';
 import 'package:puzzle/puzzle/presentation/puzzle_view/puzzle_responsive_view.dart';
+import 'package:puzzle/routes/routes.dart';
+import 'package:puzzle/settings/presentation/settings_dialog.dart';
 
 class PuzzlePage extends StatelessWidget {
   const PuzzlePage({Key? key}) : super(key: key);
@@ -20,12 +24,107 @@ class PuzzlePage extends StatelessWidget {
             size: puzzleSize,
           ),
         ),
-      child: Scaffold(
-        appBar: AppBar(
-          title: const Text('Puzzle Challenge'),
-        ),
-        body: const PuzzleView(),
+      child: BlocBuilder<AuthBloc, AuthState>(
+        builder: (context, state) {
+          return Scaffold(
+            appBar: AppBar(
+              title: const Text('Puzzle Challenge'),
+              actions: [
+                InkWell(
+                  onTap: () {
+                    _showSettingsDialog(context);
+                  },
+                  child: const Icon(
+                    Icons.settings_applications_outlined,
+                    key: Key('preferences_icon'),
+                    size: 50,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(right: 18),
+                  child: InkWell(
+                    onTap: () {
+                      state is Authenticated
+                          ? _showLogoutDialog(context)
+                          : Navigator.of(context).pushReplacementNamed(
+                              RouteGenerator.loginPage,
+                            );
+                    },
+                    child: const Icon(
+                      Icons.account_circle_rounded,
+                      key: Key('logout_icon'),
+                      size: 50,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            body: const PuzzleView(),
+          );
+        },
       ),
+    );
+  }
+
+  Future<void> _showSettingsDialog(BuildContext context) async {
+    await showGeneralDialog(
+      context: context,
+      pageBuilder: (
+        BuildContext buildContext,
+        Animation animation,
+        Animation secondaryAnimation,
+      ) {
+        return const SettingsDialog(
+          key: Key('accessibility_dialog'),
+        );
+      },
+    );
+  }
+
+  Future<void> _showLogoutDialog(BuildContext context) async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        final l10n = context.l10n;
+        return AlertDialog(
+          title: Text(
+            l10n.logoutQuestionTitle,
+            key: const Key('logout_title'),
+          ),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text(
+                  l10n.logoutQuestionText,
+                  key: const Key('logout_text'),
+                ),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: Text(
+                l10n.logoutOkButton,
+                key: const Key('logout_ok_button'),
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+                context.read<AuthBloc>().add(const Logout());
+              },
+            ),
+            TextButton(
+              child: Text(
+                l10n.logoutCancelButton,
+                key: const Key('logout_cancel_button'),
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 }

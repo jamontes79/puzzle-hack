@@ -28,10 +28,3 @@ class AttemptLogin extends LoginEvent {
   @override
   List<Object?> get props => [];
 }
-
-class AttemptLoginWithGoogle extends LoginEvent {
-  const AttemptLoginWithGoogle();
-
-  @override
-  List<Object?> get props => [];
-}

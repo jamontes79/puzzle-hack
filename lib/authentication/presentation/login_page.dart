@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:puzzle/authentication/application/auth/auth_bloc.dart';
 import 'package:puzzle/authentication/application/login/login_bloc.dart';
 import 'package:puzzle/injection/injection.dart';
 import 'package:puzzle/l10n/l10n.dart';
@@ -60,6 +61,7 @@ class LoginView extends StatelessWidget {
                 ),
               );
             } else if (state.successful) {
+              context.read<AuthBloc>().add(const CheckStatus());
               Navigator.of(context).pushReplacementNamed(
                 RouteGenerator.mainPage,
               );
@@ -158,9 +160,9 @@ class LoginView extends StatelessWidget {
                             ),
                           ),
                           onPressed: () {
-                            context.read<LoginBloc>().add(
-                                  const AttemptLoginWithGoogle(),
-                                );
+                            Navigator.of(context).pushReplacementNamed(
+                              RouteGenerator.mainPage,
+                            );
                           },
                           child: Text(
                             l10n.loginFormGoogleButton,

@@ -20,11 +20,13 @@ dependencies:
   flutter_bloc: ^8.0.1
   flutter_localizations:
     sdk: flutter
+  flutter_secure_storage: ^5.0.2
   get_it: ^7.2.0
-  google_sign_in: ^5.2.3
+  get_storage: ^2.0.3
   image: ^3.1.1
   injectable: ^1.5.3
   intl: ^0.17.0
+  shared_preferences: ^2.0.12
 
 dev_dependencies:
   bloc_test: ^9.0.2

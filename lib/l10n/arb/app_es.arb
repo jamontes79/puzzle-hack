@@ -4,7 +4,7 @@
     "loginFormEmail":  "E-mail",
     "loginFormPassword": "Contraseña",
     "loginFormButton" : "Entrar",
-    "loginFormGoogleButton" : "Entrar con Google",
+    "loginFormGoogleButton" : "Entrar como invitado",
     "loginFormRegisterLink" : "¿No tienes una cuenta todavía? Pincha aqui para crear una.",
 
     "registerFormEmail":  "E-mail",
@@ -14,5 +14,15 @@
     "registerFormLoginLink": "¿Ya tienes una cuenta? Entra aqui",
     "registerFormEmailError":  "E-mail no válido",
     "registerFormPasswordError":  "Contraseña no válida",
-    "registerFormPasswordEqualError":  "Las constraseñas no coinciden"
+    "registerFormPasswordEqualError":  "Las constraseñas no coinciden",
+
+    "logoutQuestionTitle": "¡Atención!",
+    "logoutQuestionText": "¿Está seguro que desea salir?",
+    "logoutOkButton": "Ok",
+    "logoutCancelButton": "Cancelar",
+
+    "settingsText": "Configuración",
+    "settingsShortCuts": "Usar teclado",
+    "settingsVoiceCommand": "Comandos de voz",
+    "settingsDarkMode": "Modo oscuro"
 }

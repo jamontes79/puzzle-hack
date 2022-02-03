@@ -11,23 +11,25 @@ part 'auth_state.dart';
 @injectable
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   AuthBloc(this._auth) : super(const Unauthenticated()) {
+    print('aqui3');
     on<CheckStatus>(_onCheckStatus);
     on<Logout>(_onLogout);
   }
   final IAuth _auth;
 
-  FutureOr<void> _onCheckStatus(
+  Future<FutureOr<void>> _onCheckStatus(
     CheckStatus event,
     Emitter<AuthState> emit,
-  ) {
-    _auth.getSignedUser().fold(
-          (failure) => emit(
-            const Unauthenticated(),
-          ),
-          (user) => emit(
-            const Authenticated(),
-          ),
-        );
+  ) async {
+    final failureOrUser = await _auth.getSignedUser();
+    failureOrUser.fold(
+      (failure) => emit(
+        const Unauthenticated(),
+      ),
+      (user) => emit(
+        const Authenticated(),
+      ),
+    );
   }
 
   Future<FutureOr<void>> _onLogout(

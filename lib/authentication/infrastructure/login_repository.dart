@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:google_sign_in/google_sign_in.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:injectable/injectable.dart';
 import 'package:puzzle/authentication/domain/failures/failures.dart';
 import 'package:puzzle/authentication/domain/models/puzzle_user.dart';
@@ -9,9 +9,8 @@ import 'package:puzzle/core/domain/failures/failures.dart';
 
 @LazySingleton(as: ILogin)
 class LoginRepository implements ILogin {
-  LoginRepository(this._auth, this._googleSignIn);
+  LoginRepository(this._auth);
   final FirebaseAuth _auth;
-  final GoogleSignIn _googleSignIn;
 
   @override
   Future<Either<Failure, PuzzleUser>> doLogin(
@@ -23,6 +22,10 @@ class LoginRepository implements ILogin {
         email: email,
         password: password,
       );
+      const storage = FlutterSecureStorage();
+
+      await storage.write(key: 'password', value: password);
+      await storage.write(key: 'username', value: email);
       final username =
           userCredential.user!.displayName ?? userCredential.user!.email;
       return right(
@@ -34,28 +37,5 @@ class LoginRepository implements ILogin {
     } on FirebaseAuthException catch (e) {
       return left(LoginFailure(e.code));
     }
-  }
-
-  @override
-  Future<Either<Failure, PuzzleUser>> doLoginWithGoogle() async {
-    final googleUser = await _googleSignIn.signIn();
-    if (googleUser == null) {
-      return left(const LoginFailure('cancelled'));
-    }
-    final googleAuthentication = await googleUser.authentication;
-    final authCredential = GoogleAuthProvider.credential(
-      idToken: googleAuthentication.idToken,
-      accessToken: googleAuthentication.accessToken,
-    );
-
-    final userCredential = await _auth.signInWithCredential(authCredential);
-    final username =
-        userCredential.user!.displayName ?? userCredential.user!.email;
-    return right(
-      PuzzleUser(
-        id: userCredential.user!.uid,
-        username: username!,
-      ),
-    );
   }
 }
