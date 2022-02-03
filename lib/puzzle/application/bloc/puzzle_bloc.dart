@@ -68,7 +68,8 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
       image: _puzzleImageFromLevel(event.level),
     );
     var puzzleShuffle = puzzle.shuffle();
-    while (!puzzleShuffle.isSolvable()) {
+    while (!puzzleShuffle.isSolvable() &&
+        puzzleShuffle.tilesCorrect == puzzleShuffle.tiles.length) {
       puzzleShuffle = puzzle.shuffle();
     }
     emit(

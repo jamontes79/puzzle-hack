@@ -14,7 +14,7 @@ class PuzzleViewNormalScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<PuzzleBloc, PuzzleState>(
       builder: (context, state) {
-        if (state.loading) {
+        if (state.loading || state.puzzle.image.isEmpty) {
           return const LoadingPuzzle();
         } else {
           return Column(

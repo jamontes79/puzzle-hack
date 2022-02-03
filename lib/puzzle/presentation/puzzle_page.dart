@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:cool_alert/cool_alert.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -9,10 +11,67 @@ import 'package:puzzle/puzzle/infrastructure/crop_image.dart';
 import 'package:puzzle/puzzle/presentation/puzzle_view/puzzle_responsive_view.dart';
 import 'package:puzzle/routes/routes.dart';
 import 'package:puzzle/settings/presentation/settings_dialog.dart';
+import 'package:speech_to_text/speech_recognition_result.dart';
+import 'package:speech_to_text/speech_to_text.dart';
 
 class PuzzlePage extends StatelessWidget {
-  const PuzzlePage({Key? key}) : super(key: key);
+  PuzzlePage({Key? key}) : super(key: key) {
+    _speechToText = SpeechToText();
+    minimumWordConfidence = 0.5;
 
+    _speechToText.initialize().then((bool success) async {
+      await _startListening();
+    });
+    _speechToText.statusListener = _onStatusChanged;
+  }
+  int _previousLastIndex = -1;
+  int _depthParsedPreviousLastElement = 0;
+  late double minimumWordConfidence;
+  Future<void> _startListening() {
+    return _speechToText.listen(
+      onResult: _onSpeechResult,
+      pauseFor: const Duration(minutes: 5),
+    );
+  }
+
+  void _onStatusChanged(String status) {
+    // if (status == "done") {
+    //   _startListening();
+    // }
+  }
+  void _onSpeechResult(SpeechRecognitionResult result) {
+    // This means that a new element has appeared.
+    if (result.alternates.length > _previousLastIndex) {
+      _previousLastIndex = result.alternates.length;
+      _depthParsedPreviousLastElement = 0;
+    } else {
+      // This means S2T appended to the previous `result`'s last element instead
+      // of providing a new value. This usually means the S2T algorithm picked up
+      // a continuous flow of speech or has refined a previous guess.
+    }
+    _processSpeechToTextElement(
+      element: result.alternates.last,
+      alreadyParsedTo: _depthParsedPreviousLastElement,
+    );
+  }
+
+  void _processSpeechToTextElement({
+    required SpeechRecognitionWords element,
+    required int alreadyParsedTo,
+  }) {
+    if (element.hasConfidenceRating) {
+      if (element.isConfident(threshold: minimumWordConfidence)) {
+        final newWords = element.recognizedWords
+            .substring(min(element.recognizedWords.length, alreadyParsedTo));
+        for (final word in newWords.split(' ')) {
+          print("listining: $word");
+          _depthParsedPreviousLastElement += word.length + 1;
+        }
+      }
+    }
+  }
+
+  late SpeechToText _speechToText;
   @override
   Widget build(BuildContext context) {
     final puzzleSize = PuzzleSizes.getPuzzleSize(context);
