@@ -11,7 +11,6 @@ part 'auth_state.dart';
 @injectable
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   AuthBloc(this._auth) : super(const Unauthenticated()) {
-    print('aqui3');
     on<CheckStatus>(_onCheckStatus);
     on<Logout>(_onLogout);
   }

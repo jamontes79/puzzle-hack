@@ -12,8 +12,6 @@ part 'settings_state.dart';
 @injectable
 class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
   SettingsBloc(this._accessibility) : super(const SettingsState()) {
-    //SettingsBloc() : super(const SettingsState()) {
-    print('aqui2');
     on<ChangeShortcutsEvent>(_onChangeShortcutsEvent);
     on<ChangeVoiceCommandEvent>(_onChangeVoiceCommandEvent);
     on<ChangeStyleEvent>(_onChangeStyleEvent);

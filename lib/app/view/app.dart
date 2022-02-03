@@ -21,22 +21,18 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider<SettingsBloc>(
-          create: (_) {
-            print('provider1');
-            return getIt<SettingsBloc>()
-              ..add(
-                const RequestAccessibilitySettings(),
-              );
-          },
+        BlocProvider(
+          create: (_) => getIt<SettingsBloc>()
+            ..add(
+              const RequestAccessibilitySettings(),
+            ),
         ),
-        BlocProvider<AuthBloc>(create: (_) {
-          print('provider2');
-          return getIt<AuthBloc>()
+        BlocProvider(
+          create: (_) => getIt<AuthBloc>()
             ..add(
               const CheckStatus(),
-            );
-        }),
+            ),
+        ),
       ],
       child: BlocBuilder<SettingsBloc, SettingsState>(
         builder: (context, state) {
