@@ -6,6 +6,7 @@ import 'package:puzzle/puzzle/presentation/puzzle_view/widgets/dash_logo.dart';
 import 'package:puzzle/puzzle/presentation/puzzle_view/widgets/loading_puzzle.dart';
 import 'package:puzzle/puzzle/presentation/puzzle_view/widgets/puzzle_header.dart';
 import 'package:puzzle/puzzle/presentation/puzzle_view/widgets/suffle_button.dart';
+import 'package:puzzle/speech/infrastructure/speech_recognition.dart';
 
 class PuzzleViewMobileScreen extends StatelessWidget {
   const PuzzleViewMobileScreen({Key? key}) : super(key: key);
@@ -14,7 +15,7 @@ class PuzzleViewMobileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<PuzzleBloc, PuzzleState>(
       builder: (context, state) {
-        if (state.loading) {
+        if (state.loading || state.puzzle.image.isEmpty) {
           return const LoadingPuzzle();
         } else {
           return Column(
@@ -25,6 +26,7 @@ class PuzzleViewMobileScreen extends StatelessWidget {
                 children: [
                   PuzzleBoard(
                     puzzle: state.puzzle,
+                    speechRecognition: SpeechRecognition(),
                   ),
                   const DashLogo(size: 130),
                 ],

@@ -1,20 +1,41 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:puzzle/helpers/puzzle_size.dart';
+import 'package:puzzle/puzzle/application/bloc/puzzle_bloc.dart';
 import 'package:puzzle/puzzle/domain/models/puzzle.dart';
 import 'package:puzzle/puzzle/presentation/puzzle_board/basic_tile.dart';
 import 'package:puzzle/puzzle/presentation/puzzle_board/movable_tile.dart';
 import 'package:puzzle/puzzle/presentation/puzzle_board/white_tile.dart';
+import 'package:puzzle/speech/infrastructure/speech_recognition.dart';
 
 class PuzzleBoard extends StatelessWidget {
   const PuzzleBoard({
     Key? key,
     required this.puzzle,
+    required this.speechRecognition,
   }) : super(key: key);
 
   final Puzzle puzzle;
+  final SpeechRecognition speechRecognition;
   int _getPositionInList(int dimension, int x, int y) => (dimension * x) + y;
+
   @override
   Widget build(BuildContext context) {
+    speechRecognition.initialize(
+      sendCommand: (word) {
+        print('word: $word');
+        final tile = puzzle.tiles[0];
+        context.read<PuzzleBloc>().add(
+              MoveTile(word),
+            );
+        /*
+        context.read<PuzzleBloc>().add(
+              MoveTile(word),
+            );
+
+         */
+      },
+    );
     final dimension = puzzle.getDimension();
     final boardSize = PuzzleSizes.getBoardSize(context);
     final tileSize = PuzzleSizes.getTileSize(

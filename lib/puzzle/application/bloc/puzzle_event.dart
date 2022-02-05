@@ -35,3 +35,12 @@ class ShufflePuzzle extends PuzzleEvent {
   @override
   List<Object?> get props => [];
 }
+
+class MoveTile extends PuzzleEvent {
+  const MoveTile(this.coordinate);
+
+  final String coordinate;
+
+  @override
+  List<Object?> get props => [coordinate];
+}

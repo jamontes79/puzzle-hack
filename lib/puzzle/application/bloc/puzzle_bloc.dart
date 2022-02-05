@@ -23,6 +23,7 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
     on<InitializePuzzle>(_onInitializePuzzle);
     on<SwapTile>(_onSwapTile);
     on<ShufflePuzzle>(_onShufflePuzzle);
+    on<MoveTile>(_onMoveTile);
   }
 
   final CropImage _cropImage;
@@ -83,24 +84,9 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
   }
 
   FutureOr<void> _onSwapTile(SwapTile event, Emitter<PuzzleState> emit) {
-    if (state.puzzle.canMove(event.tile)) {
-      final puzzle = state.puzzle.moveTile(event.tile);
-      emit(
-        state.copyWith(
-          puzzle: puzzle,
-          canMakeMove: true,
-          currentMoves: state.currentMoves + 1,
-          tilesCorrect: puzzle.tilesCorrect,
-          solved: puzzle.tilesCorrect == puzzle.tiles.length,
-        ),
-      );
-    } else {
-      emit(
-        state.copyWith(
-          canMakeMove: false,
-        ),
-      );
-    }
+    emit(
+      _moveTile(event.tile),
+    );
   }
 
   FutureOr<void> _onShufflePuzzle(
@@ -121,5 +107,40 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
         loading: false,
       ),
     );
+  }
+
+  FutureOr<void> _onMoveTile(
+    MoveTile event,
+    Emitter<PuzzleState> emit,
+  ) {
+    final tile = state.puzzle.getFromStringCoordinate(event.coordinate);
+    if (tile != null) {
+      emit(
+        _moveTile(tile),
+      );
+    } else {
+      emit(
+        state.copyWith(
+          canMakeMove: false,
+        ),
+      );
+    }
+  }
+
+  PuzzleState _moveTile(TilePuzzle tile) {
+    if (state.puzzle.canMove(tile)) {
+      final puzzle = state.puzzle.moveTile(tile);
+      return state.copyWith(
+        puzzle: puzzle,
+        canMakeMove: true,
+        currentMoves: state.currentMoves + 1,
+        tilesCorrect: puzzle.tilesCorrect,
+        solved: puzzle.tilesCorrect == puzzle.tiles.length,
+      );
+    } else {
+      return state.copyWith(
+        canMakeMove: false,
+      );
+    }
   }
 }
