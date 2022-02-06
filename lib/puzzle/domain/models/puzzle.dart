@@ -18,7 +18,7 @@ class Puzzle extends Equatable {
   final int tilesCorrect;
   final double size;
   final String image;
-  static const _alphabet = {
+  static const alphabet = {
     'A': 0,
     'B': 1,
     'C': 2,
@@ -259,9 +259,9 @@ class Puzzle extends Equatable {
     if (coordinate.length > 1) {
       final xChar = coordinate.substring(1);
       final yChar = coordinate.substring(0, 1);
-      final x = _alphabet[yChar];
+      final x = alphabet[yChar];
       final y = int.tryParse(xChar);
-      final dimension = getDimension();
+
       if (x != null && y != null) {
         final findPosition = Position(x: x, y: y - 1);
         try {

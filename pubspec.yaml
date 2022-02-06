@@ -4,7 +4,7 @@ version: 1.0.0+1
 publish_to: none
 
 environment:
-  sdk: ">=2.14.0 <3.0.0"
+  sdk: ">=2.15.0 <3.0.0"
 
 dependencies:
   bloc: ^8.0.2
@@ -26,7 +26,7 @@ dependencies:
   image: ^3.1.1
   injectable: ^1.5.3
   intl: ^0.17.0
-  shared_preferences: ^2.0.12
+  shared_preferences: ^2.0.13
   speech_to_text: ^5.4.2
 
 dev_dependencies:

@@ -137,13 +137,7 @@ class PuzzleView extends StatelessWidget {
     return Scaffold(
       body: BlocListener<PuzzleBloc, PuzzleState>(
         listener: (context, state) {
-          if (state.puzzle.getDimension() > 0 && !state.puzzle.isSolvable()) {
-            _showNotSolvableDialog(context).then(
-              (value) => context.read<PuzzleBloc>().add(
-                    const ShufflePuzzle(),
-                  ),
-            );
-          } else if (state.solved) {
+          if (state.solved) {
             CoolAlert.show(
               context: context,
               type: CoolAlertType.success,
@@ -163,42 +157,6 @@ class PuzzleView extends StatelessWidget {
         },
         child: const PuzzleResponsiveView(),
       ),
-    );
-  }
-
-  Future<void> _showNotSolvableDialog(BuildContext context) {
-    return showDialog<void>(
-      context: context,
-      barrierDismissible: false, // user must tap button!
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text(
-            'Puzzle not solvable',
-            key: Key('dialog_title'),
-          ),
-          content: SingleChildScrollView(
-            child: ListBody(
-              children: const <Widget>[
-                Text(
-                  'Current tiles make the resolution impossible.Try it again!',
-                  key: Key('dialog_text'),
-                ),
-              ],
-            ),
-          ),
-          actions: <Widget>[
-            TextButton(
-              child: const Text(
-                'Ok',
-                key: Key('dialog_ok_button'),
-              ),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      },
     );
   }
 }

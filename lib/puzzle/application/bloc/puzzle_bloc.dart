@@ -18,6 +18,7 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
               tiles: [],
               size: 600,
             ),
+            loading: true,
           ),
         ) {
     on<InitializePuzzle>(_onInitializePuzzle);

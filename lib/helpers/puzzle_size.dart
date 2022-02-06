@@ -25,13 +25,13 @@ class PuzzleSizes {
     late double boardSize;
     switch (device) {
       case Device.mobile:
-        boardSize = 320;
+        boardSize = 340;
         break;
       case Device.tablet:
-        boardSize = 420;
+        boardSize = 440;
         break;
       case Device.desktop:
-        boardSize = 520;
+        boardSize = 540;
         break;
     }
     return boardSize;

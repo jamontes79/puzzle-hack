@@ -23,19 +23,12 @@ class PuzzleBoard extends StatelessWidget {
   Widget build(BuildContext context) {
     speechRecognition.initialize(
       sendCommand: (word) {
-        print('word: $word');
-        final tile = puzzle.tiles[0];
         context.read<PuzzleBloc>().add(
               MoveTile(word),
             );
-        /*
-        context.read<PuzzleBloc>().add(
-              MoveTile(word),
-            );
-
-         */
       },
     );
+
     final dimension = puzzle.getDimension();
     final boardSize = PuzzleSizes.getBoardSize(context);
     final tileSize = PuzzleSizes.getTileSize(
@@ -49,9 +42,35 @@ class PuzzleBoard extends StatelessWidget {
         padding: const EdgeInsets.all(8),
         child: Column(
           children: [
+            Row(
+              children: [
+                for (var x = 0; x < dimension; x++)
+                  SizedBox(
+                    width: tileSize,
+                    child: Center(
+                      child: Text(
+                        Puzzle.alphabet.keys.firstWhere(
+                          (k) => Puzzle.alphabet[k] == x,
+                        ),
+                      ),
+                    ),
+                  ),
+              ],
+            ),
             for (var x = 0; x < dimension; x++)
               Row(
                 children: [
+                  SizedBox(
+                    height: tileSize,
+                    child: Center(
+                      child: Text(
+                        (x + 1).toString(),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    width: 10,
+                  ),
                   for (var y = 0; y < dimension; y++)
                     puzzle.tiles[_getPositionInList(dimension, x, y)].isWhite
                         ? WhiteTile(
