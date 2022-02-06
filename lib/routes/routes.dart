@@ -34,8 +34,8 @@ class RouteGenerator {
 
       case mainPage:
         return MaterialPageRoute(
-          builder: (_) => PuzzlePage(
-            key: const Key('puzzle_page'),
+          builder: (_) => const PuzzlePage(
+            key: Key('puzzle_page'),
           ),
         );
       default:

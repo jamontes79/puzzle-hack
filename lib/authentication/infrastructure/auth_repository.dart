@@ -21,10 +21,12 @@ class AuthRepository implements IAuth {
           await storage.containsKey(key: 'username')) {
         final password = await storage.read(key: 'password');
         final username = await storage.read(key: 'username');
-        await _auth.signInWithEmailAndPassword(
-          email: username!,
-          password: password!,
-        );
+        if (username != null && password != null) {
+          await _auth.signInWithEmailAndPassword(
+            email: username,
+            password: password,
+          );
+        }
       }
     }
     if (_auth.currentUser != null) {

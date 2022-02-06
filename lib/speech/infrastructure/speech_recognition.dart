@@ -19,7 +19,6 @@ class SpeechRecognition implements ISpeechRecognition {
   @override
   void initialize({required Function(String) sendCommand}) {
     if (!_initialized) {
-      print('aqui');
       _initialized = true;
       _sendCommand = sendCommand;
       _speechToText.initialize().then((bool success) async {
@@ -49,8 +48,8 @@ class SpeechRecognition implements ISpeechRecognition {
       _depthParsedPreviousLastElement = 0;
     } else {
       // This means S2T appended to the previous `result`'s last element instead
-      // of providing a new value. This usually means the S2T algorithm picked up
-      // a continuous flow of speech or has refined a previous guess.
+      // of providing a new value. This usually means the S2T algorithm picked
+      // up a continuous flow of speech or has refined a previous guess.
     }
     _processSpeechToTextElement(
       element: result.alternates.last,

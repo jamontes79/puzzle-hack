@@ -269,7 +269,7 @@ class Puzzle extends Equatable {
             (element) => element.currentPosition == findPosition,
           );
           return tile;
-        } on Error catch (_) {
+        } catch (_) {
           return null;
         }
       }

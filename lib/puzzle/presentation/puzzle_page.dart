@@ -30,32 +30,31 @@ class PuzzlePage extends StatelessWidget {
             appBar: AppBar(
               title: const Text('Puzzle Challenge'),
               actions: [
-                InkWell(
-                  onTap: () {
-                    _showSettingsDialog(context);
+                PopupMenuButton(
+                  icon: const Icon(Icons.more_vert),
+                  onSelected: (value) {
+                    if (value == 'Settings') {
+                      _showSettingsDialog(context);
+                    } else if (value == 'Login') {
+                      Navigator.of(context).pushReplacementNamed(
+                        RouteGenerator.loginPage,
+                      );
+                    } else if (value == 'Logout') {
+                      _showLogoutDialog(context);
+                    }
                   },
-                  child: const Icon(
-                    Icons.settings_applications_outlined,
-                    key: Key('preferences_icon'),
-                    size: 50,
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(right: 18),
-                  child: InkWell(
-                    onTap: () {
-                      state is Authenticated
-                          ? _showLogoutDialog(context)
-                          : Navigator.of(context).pushReplacementNamed(
-                              RouteGenerator.loginPage,
-                            );
-                    },
-                    child: const Icon(
-                      Icons.account_circle_rounded,
-                      key: Key('logout_icon'),
-                      size: 50,
+                  itemBuilder: (context) => [
+                    const PopupMenuItem(
+                      value: 'Settings',
+                      child: Text('Settings'),
                     ),
-                  ),
+                    PopupMenuItem(
+                      value: state is Authenticated ? 'Logout' : 'Login',
+                      child: Text(
+                        state is Authenticated ? 'Logout' : 'Login',
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
