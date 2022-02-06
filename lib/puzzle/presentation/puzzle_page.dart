@@ -9,6 +9,7 @@ import 'package:puzzle/puzzle/infrastructure/crop_image.dart';
 import 'package:puzzle/puzzle/presentation/puzzle_view/puzzle_responsive_view.dart';
 import 'package:puzzle/routes/routes.dart';
 import 'package:puzzle/settings/presentation/settings_dialog.dart';
+import 'package:scaffold_gradient_background/scaffold_gradient_background.dart';
 
 class PuzzlePage extends StatelessWidget {
   const PuzzlePage({Key? key}) : super(key: key);
@@ -26,11 +27,20 @@ class PuzzlePage extends StatelessWidget {
         ),
       child: BlocBuilder<AuthBloc, AuthState>(
         builder: (context, state) {
-          return Scaffold(
+          return ScaffoldGradientBackground(
+            gradient: const LinearGradient(
+              begin: Alignment.topRight,
+              end: Alignment.bottomLeft,
+              colors: [
+                Color.fromARGB(255, 19, 74, 159),
+                Color.fromARGB(255, 109, 184, 246),
+              ],
+            ),
             appBar: AppBar(
               title: const Text('Puzzle Challenge'),
               actions: [
                 PopupMenuButton(
+                  color: const Color.fromARGB(255, 109, 184, 246),
                   icon: const Icon(Icons.more_vert),
                   onSelected: (value) {
                     if (value == 'Settings') {
@@ -133,29 +143,26 @@ class PuzzleView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: BlocListener<PuzzleBloc, PuzzleState>(
-        listener: (context, state) {
-          if (state.solved) {
-            CoolAlert.show(
-              context: context,
-              type: CoolAlertType.success,
-              text:
-                  "Level ${state.level} completed! Let's go to the next level!",
-              onConfirmBtnTap: () {
-                Navigator.of(context, rootNavigator: true).pop();
-                context.read<PuzzleBloc>().add(
-                      InitializePuzzle(
-                        level: state.level + 1,
-                        size: PuzzleSizes.getPuzzleSize(context),
-                      ),
-                    );
-              },
-            );
-          }
-        },
-        child: const PuzzleResponsiveView(),
-      ),
+    return BlocListener<PuzzleBloc, PuzzleState>(
+      listener: (context, state) {
+        if (state.solved) {
+          CoolAlert.show(
+            context: context,
+            type: CoolAlertType.success,
+            text: "Level ${state.level} completed! Let's go to the next level!",
+            onConfirmBtnTap: () {
+              Navigator.of(context, rootNavigator: true).pop();
+              context.read<PuzzleBloc>().add(
+                    InitializePuzzle(
+                      level: state.level + 1,
+                      size: PuzzleSizes.getPuzzleSize(context),
+                    ),
+                  );
+            },
+          );
+        }
+      },
+      child: const PuzzleResponsiveView(),
     );
   }
 }

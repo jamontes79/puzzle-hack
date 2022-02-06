@@ -36,10 +36,8 @@ class _TileWithImage extends StatelessWidget {
           width: tile.isCorrectPosition ? 1 : 0,
           color: tile.isCorrectPosition ? Colors.green : Colors.black,
         ),
-        borderRadius: BorderRadius.circular(10),
       ),
       child: ClipRRect(
-        borderRadius: BorderRadius.circular(10),
         child: Center(
           child: Image.memory(
             tile.imagePart!,
@@ -68,7 +66,6 @@ class _TitleWihoutImage extends StatelessWidget {
       decoration: BoxDecoration(
         border: Border.all(),
         color: Colors.blue,
-        borderRadius: BorderRadius.circular(10),
       ),
       height: tileSize,
       width: tileSize,

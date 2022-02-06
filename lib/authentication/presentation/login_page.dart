@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:puzzle/authentication/application/auth/auth_bloc.dart';
 import 'package:puzzle/authentication/application/login/login_bloc.dart';
+import 'package:puzzle/helpers/responsive_helper.dart';
 import 'package:puzzle/injection/injection.dart';
 import 'package:puzzle/l10n/l10n.dart';
 import 'package:puzzle/routes/routes.dart';
@@ -45,7 +46,14 @@ class LoginView extends StatelessWidget {
     return Scaffold(
       body: Container(
         decoration: const BoxDecoration(
-          color: Colors.lightBlueAccent,
+          gradient: LinearGradient(
+            begin: Alignment.topRight,
+            end: Alignment.bottomLeft,
+            colors: [
+              Color.fromARGB(255, 19, 74, 159),
+              Color.fromARGB(255, 109, 184, 246),
+            ],
+          ),
           image: DecorationImage(
             image: AssetImage('assets/images/background.png'),
             fit: BoxFit.fitHeight,
@@ -75,8 +83,12 @@ class LoginView extends StatelessWidget {
                     color: const Color.fromRGBO(255, 255, 255, 0.7),
                     borderRadius: BorderRadius.circular(8),
                   ),
-                  width: 500,
-                  height: 500,
+                  width: ResponsiveHelper.getDevice(context) == Device.mobile
+                      ? MediaQuery.of(context).size.width
+                      : 500,
+                  height: ResponsiveHelper.getDevice(context) == Device.mobile
+                      ? MediaQuery.of(context).size.height
+                      : 500,
                   child: Padding(
                     padding: const EdgeInsets.all(20),
                     child: ListView(

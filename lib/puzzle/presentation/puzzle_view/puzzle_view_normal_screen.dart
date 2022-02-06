@@ -23,6 +23,7 @@ class PuzzleViewNormalScreen extends StatelessWidget {
               PuzzleHeader(level: state.level),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   PuzzleBoard(
                     puzzle: state.puzzle,
@@ -44,7 +45,6 @@ class PuzzleViewNormalScreen extends StatelessWidget {
                                 'Tiles Correct: ${state.tilesCorrect}',
                                 style: const TextStyle().copyWith(
                                   fontSize: 18,
-                                  color: Colors.blue,
                                 ),
                               ),
                               const SizedBox(

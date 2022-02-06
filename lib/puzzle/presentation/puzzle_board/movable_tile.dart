@@ -23,7 +23,6 @@ class MovableTile extends StatelessWidget {
         decoration: BoxDecoration(
           border: Border.all(),
           color: Colors.white,
-          borderRadius: BorderRadius.circular(20),
         ),
         child: Container(),
       ),

@@ -23,7 +23,6 @@ class WhiteTile extends StatelessWidget {
               color: tile.isCorrectPosition ? Colors.green : Colors.black,
             ),
             color: Colors.white,
-            borderRadius: BorderRadius.circular(20),
           ),
           width: tileSize,
           height: tileSize,

@@ -28,7 +28,7 @@ class PuzzleViewMobileScreen extends StatelessWidget {
                     puzzle: state.puzzle,
                     speechRecognition: SpeechRecognition(),
                   ),
-                  const DashLogo(size: 130),
+                  const DashLogo(size: 70),
                 ],
               ),
               SizedBox(
@@ -44,7 +44,6 @@ class PuzzleViewMobileScreen extends StatelessWidget {
                             'Tiles Correct: ${state.tilesCorrect}\n',
                             style: const TextStyle().copyWith(
                               fontSize: 18,
-                              color: Colors.blue,
                             ),
                           ),
                           Image.asset(

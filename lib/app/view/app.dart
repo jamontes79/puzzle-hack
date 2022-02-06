@@ -39,9 +39,21 @@ class App extends StatelessWidget {
           return MaterialApp(
             theme: ThemeData(
               primaryColor: Colors.blueAccent,
-              appBarTheme: const AppBarTheme(color: Color(0xFF13B9FF)),
+              appBarTheme: const AppBarTheme(
+                color: Color.fromARGB(255, 19, 74, 159),
+              ),
               colorScheme: ColorScheme.fromSwatch(
                 accentColor: const Color(0xFF13B9FF),
+              ),
+              textTheme: Theme.of(context).textTheme.apply(
+                    bodyColor: Colors.white,
+                    displayColor: Colors.white,
+                  ),
+              outlinedButtonTheme: OutlinedButtonThemeData(
+                style: OutlinedButton.styleFrom(
+                  primary: Colors.white,
+                  side: const BorderSide(color: Colors.white),
+                ),
               ),
             ),
             localizationsDelegates: const [

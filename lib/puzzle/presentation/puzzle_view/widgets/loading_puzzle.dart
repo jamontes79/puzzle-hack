@@ -11,7 +11,6 @@ class LoadingPuzzle extends StatelessWidget {
         textAlign: TextAlign.center,
         style: const TextStyle().copyWith(
           fontSize: 24,
-          color: Colors.blue,
         ),
       ),
     );
