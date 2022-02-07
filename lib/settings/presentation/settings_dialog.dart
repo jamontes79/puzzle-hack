@@ -26,6 +26,9 @@ class SettingsDialog extends StatelessWidget {
             child: Text(
               l10n.settingsText,
               key: const Key('accessibility_dialog_title'),
+              style: Theme.of(context).textTheme.headline6?.copyWith(
+                    color: Colors.black,
+                  ),
             ),
           ),
           _getCloseButton(context),
@@ -44,7 +47,9 @@ class SettingsDialog extends StatelessWidget {
                   Text(
                     l10n.settingsShortCuts,
                     key: const Key('accessibility_dialog_shortcuts'),
-                    style: Theme.of(context).textTheme.bodyText1,
+                    style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                          color: Colors.black,
+                        ),
                   ),
                   Switch(
                     key: const Key('accessibility_dialog_shortcuts_switch'),
@@ -63,7 +68,9 @@ class SettingsDialog extends StatelessWidget {
                   Text(
                     l10n.settingsVoiceCommand,
                     key: const Key('accessibility_dialog_plaintext_text'),
-                    style: Theme.of(context).textTheme.bodyText1,
+                    style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                          color: Colors.black,
+                        ),
                   ),
                   Switch(
                     key: const Key('accessibility_dialog_plaintext_switch'),
@@ -82,7 +89,9 @@ class SettingsDialog extends StatelessWidget {
                   Text(
                     l10n.settingsDarkMode,
                     key: const Key('accessibility_dialog_darkmode_text'),
-                    style: Theme.of(context).textTheme.bodyText1,
+                    style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                          color: Colors.black,
+                        ),
                   ),
                   Switch(
                     key: const Key('accessibility_dialog_darkmode_switch'),

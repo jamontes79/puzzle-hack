@@ -24,5 +24,7 @@
     "settingsText": "Configuración",
     "settingsShortCuts": "Usar teclado",
     "settingsVoiceCommand": "Comandos de voz",
-    "settingsDarkMode": "Modo oscuro"
+    "settingsDarkMode": "Modo oscuro",
+
+    "rankingTitle" : "Ranking"
 }

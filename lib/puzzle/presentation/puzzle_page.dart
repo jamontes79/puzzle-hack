@@ -7,6 +7,7 @@ import 'package:puzzle/l10n/l10n.dart';
 import 'package:puzzle/puzzle/application/bloc/puzzle_bloc.dart';
 import 'package:puzzle/puzzle/infrastructure/crop_image.dart';
 import 'package:puzzle/puzzle/presentation/puzzle_view/puzzle_responsive_view.dart';
+import 'package:puzzle/ranking/presentation/ranking_dialog.dart';
 import 'package:puzzle/routes/routes.dart';
 import 'package:puzzle/settings/presentation/settings_dialog.dart';
 import 'package:scaffold_gradient_background/scaffold_gradient_background.dart';
@@ -51,12 +52,19 @@ class PuzzlePage extends StatelessWidget {
                       );
                     } else if (value == 'Logout') {
                       _showLogoutDialog(context);
+                    } else if (value == 'Ranking') {
+                      _showRankingDialog(context);
                     }
                   },
                   itemBuilder: (context) => [
                     const PopupMenuItem(
                       value: 'Settings',
                       child: Text('Settings'),
+                    ),
+                    const PopupMenuItem(
+                      value: 'Ranking',
+                      // enabled: state is Authenticated,
+                      child: Text('Ranking'),
                     ),
                     PopupMenuItem(
                       value: state is Authenticated ? 'Logout' : 'Login',
@@ -85,6 +93,21 @@ class PuzzlePage extends StatelessWidget {
       ) {
         return const SettingsDialog(
           key: Key('accessibility_dialog'),
+        );
+      },
+    );
+  }
+
+  Future<void> _showRankingDialog(BuildContext context) async {
+    await showGeneralDialog(
+      context: context,
+      pageBuilder: (
+        BuildContext buildContext,
+        Animation animation,
+        Animation secondaryAnimation,
+      ) {
+        return const RankingDialog(
+          key: Key('ranking_dialog'),
         );
       },
     );

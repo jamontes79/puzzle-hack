@@ -112,6 +112,8 @@ class LoginView extends StatelessWidget {
                             labelText: l10n.loginFormEmail,
                           ),
                           keyboardType: TextInputType.emailAddress,
+                          style:
+                              const TextStyle().copyWith(color: Colors.black),
                         ),
                         const SizedBox(
                           height: 20,
@@ -124,6 +126,8 @@ class LoginView extends StatelessWidget {
                             prefixIcon: const Icon(Icons.lock_outline),
                             labelText: l10n.loginFormPassword,
                           ),
+                          style:
+                              const TextStyle().copyWith(color: Colors.black),
                         ),
                         const SizedBox(
                           height: 40,
