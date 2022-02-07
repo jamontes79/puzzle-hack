@@ -88,7 +88,7 @@ class LoginView extends StatelessWidget {
                       : 500,
                   height: ResponsiveHelper.getDevice(context) == Device.mobile
                       ? MediaQuery.of(context).size.height
-                      : 500,
+                      : 560,
                   child: Padding(
                     padding: const EdgeInsets.all(20),
                     child: ListView(

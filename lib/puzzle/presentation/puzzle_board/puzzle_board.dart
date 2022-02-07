@@ -1,3 +1,6 @@
+import 'dart:io' show Platform;
+
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:puzzle/helpers/puzzle_size.dart';
@@ -18,17 +21,27 @@ class PuzzleBoard extends StatelessWidget {
   final Puzzle puzzle;
   final SpeechRecognition speechRecognition;
   int _getPositionInList(int dimension, int x, int y) => (dimension * x) + y;
+  bool _allowedPlatformToUseMicro() {
+    if (!kIsWeb) {
+      if (Platform.isAndroid || Platform.isIOS) {
+        return true;
+      }
+      return false;
+    }
+    return true;
+  }
 
   @override
   Widget build(BuildContext context) {
-    speechRecognition.initialize(
-      sendCommand: (word) {
-        context.read<PuzzleBloc>().add(
-              MoveTile(word),
-            );
-      },
-    );
-
+    if (_allowedPlatformToUseMicro()) {
+      speechRecognition.initialize(
+        sendCommand: (word) {
+          context.read<PuzzleBloc>().add(
+                MoveTile(word),
+              );
+        },
+      );
+    }
     final dimension = puzzle.getDimension();
     final boardSize = PuzzleSizes.getBoardSize(context);
     final tileSize = PuzzleSizes.getTileSize(
