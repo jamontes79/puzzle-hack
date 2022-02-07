@@ -1,0 +1,1 @@
+fvm flutter build web -t lib/main_production.dart --base-href /puzzle/
