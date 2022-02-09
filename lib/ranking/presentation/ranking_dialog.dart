@@ -1,12 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:puzzle/injection/injection.dart';
 import 'package:puzzle/l10n/l10n.dart';
+import 'package:puzzle/ranking/application/ranking_bloc.dart';
 
 class RankingDialog extends StatelessWidget {
   const RankingDialog({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return _buildDialog(context);
+    return BlocProvider(
+      create: (context) => getIt<RankingBloc>()
+        ..add(
+          const RetrieveRanking(),
+        ),
+      child: _buildDialog(context),
+    );
   }
 
   AlertDialog _buildDialog(BuildContext context) {
@@ -32,34 +41,45 @@ class RankingDialog extends StatelessWidget {
           _getCloseButton(context),
         ],
       ),
-      content: Column(
-        mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          for (int i = 0; i < 5; i++)
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'User $i',
-                  key: const Key('accessibility_dialog_shortcuts'),
-                  style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                        color: Colors.black,
+      content: BlocBuilder<RankingBloc, RankingState>(
+        builder: (context, state) {
+          if (state is RankingLoading) {
+            return const CircularProgressIndicator();
+          } else if (state is RankingLoadSuccessful) {
+            final rankings = state.list;
+            return Column(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                for (int i = 0; i < rankings.length; i++)
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        rankings[i].user,
+                        key: const Key('accessibility_dialog_shortcuts'),
+                        style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                              color: Colors.black,
+                            ),
                       ),
-                ),
-                Text(
-                  '10 movs.',
-                  style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                        color: Colors.black,
+                      Text(
+                        '${rankings[i].numberOfMovements} movs.',
+                        style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                              color: Colors.black,
+                            ),
                       ),
+                    ],
+                  ),
+                const SizedBox(
+                  height: 30,
                 ),
               ],
-            ),
-          const SizedBox(
-            height: 30,
-          ),
-        ],
+            );
+          } else {
+            return Container();
+          }
+        },
       ),
     );
   }

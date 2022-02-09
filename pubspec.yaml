@@ -10,6 +10,7 @@ dependencies:
   bloc: ^8.0.2
   build_runner: ^2.1.7
   cloud_firestore: ^3.1.7
+  confetti: ^0.6.0
   cool_alert: ^1.1.0
   dartz: ^0.10.1
   equatable: ^2.0.3
