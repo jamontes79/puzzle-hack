@@ -57,7 +57,7 @@ class RankingDialog extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        rankings[i].user,
+                        rankings[i].username,
                         key: const Key('accessibility_dialog_shortcuts'),
                         style: Theme.of(context).textTheme.bodyText1?.copyWith(
                               color: Colors.black,

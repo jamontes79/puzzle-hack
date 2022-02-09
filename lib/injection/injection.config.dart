@@ -59,7 +59,8 @@ _i1.GetIt $initGetIt(_i1.GetIt get,
       () => _i15.RegisterRepository(get<_i3.FirebaseAuth>()));
   gh.lazySingleton<_i16.ISpeechRecognition>(() => _i17.SpeechRecognition());
   gh.factory<_i18.LoginBloc>(() => _i18.LoginBloc(get<_i10.ILogin>()));
-  gh.singleton<_i19.RankingBloc>(_i19.RankingBloc(get<_i12.IRanking>()));
+  gh.factory<_i19.RankingBloc>(
+      () => _i19.RankingBloc(get<_i12.IRanking>(), get<_i8.IAuth>()));
   gh.factory<_i20.RegisterBloc>(() => _i20.RegisterBloc(get<_i14.IRegister>()));
   gh.factory<_i21.SettingsBloc>(
       () => _i21.SettingsBloc(get<_i6.IAccessibility>()));

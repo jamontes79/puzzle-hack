@@ -18,7 +18,7 @@ class RankingRepository implements IRanking {
   Stream<Either<RankingFailure, List<Ranking>>> watchAll() async* {
     yield* _firebaseFirestore
         .collection('ranking')
-        .orderBy('numberOfMovements', descending: true)
+        .orderBy('numberOfMovements', descending: false)
         .limit(5)
         .snapshots()
         .map(

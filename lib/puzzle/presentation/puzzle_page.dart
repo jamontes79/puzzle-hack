@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:puzzle/authentication/application/auth/auth_bloc.dart';
 import 'package:puzzle/helpers/puzzle_size.dart';
+import 'package:puzzle/injection/injection.dart';
 import 'package:puzzle/l10n/l10n.dart';
 import 'package:puzzle/puzzle/application/bloc/puzzle_bloc.dart';
 import 'package:puzzle/puzzle/infrastructure/crop_image.dart';
 import 'package:puzzle/puzzle/presentation/puzzle_view/puzzle_responsive_view.dart';
+import 'package:puzzle/ranking/application/ranking_bloc.dart';
 import 'package:puzzle/ranking/presentation/ranking_dialog.dart';
 import 'package:puzzle/routes/routes.dart';
 import 'package:puzzle/settings/presentation/settings_dialog.dart';
@@ -18,14 +20,24 @@ class PuzzlePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final puzzleSize = PuzzleSizes.getPuzzleSize(context);
-    return BlocProvider(
-      create: (BuildContext context) => PuzzleBloc(CropImage())
-        ..add(
-          InitializePuzzle(
-            level: 1,
-            size: puzzleSize,
-          ),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (BuildContext context) => PuzzleBloc(CropImage())
+            ..add(
+              InitializePuzzle(
+                level: 1,
+                size: puzzleSize,
+              ),
+            ),
         ),
+        BlocProvider(
+          create: (context) => getIt<RankingBloc>()
+            ..add(
+              const RetrieveRanking(),
+            ),
+        ),
+      ],
       child: BlocBuilder<AuthBloc, AuthState>(
         builder: (context, state) {
           return ScaffoldGradientBackground(
@@ -169,6 +181,11 @@ class PuzzleView extends StatelessWidget {
     return BlocListener<PuzzleBloc, PuzzleState>(
       listener: (context, state) {
         if (state.solved) {
+          context.read<RankingBloc>().add(
+                SaveRanking(
+                  state.currentMoves,
+                ),
+              );
           CoolAlert.show(
             context: context,
             type: CoolAlertType.success,

@@ -4,6 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 import 'package:injectable/injectable.dart';
+import 'package:puzzle/authentication/domain/usecases/i_auth.dart';
 import 'package:puzzle/ranking/domain/failures/ranking_failure.dart';
 import 'package:puzzle/ranking/domain/models/ranking.dart';
 import 'package:puzzle/ranking/domain/usecases/i_ranking.dart';
@@ -11,15 +12,15 @@ import 'package:puzzle/ranking/domain/usecases/i_ranking.dart';
 part 'ranking_event.dart';
 part 'ranking_state.dart';
 
-@singleton
+@injectable
 class RankingBloc extends Bloc<RankingEvent, RankingState> {
-  RankingBloc(this._rankingRepository) : super(RankingInitial()) {
+  RankingBloc(this._rankingRepository, this._auth) : super(RankingInitial()) {
     on<RetrieveRanking>(_onRetrieveRanking);
     on<RankingReceived>(_onRankingReceived);
     on<SaveRanking>(_onSaveRanking);
   }
   final IRanking _rankingRepository;
-  // final IAuth _auth;
+  final IAuth _auth;
   FutureOr<void> _onRetrieveRanking(
     RetrieveRanking event,
     Emitter<RankingState> emit,
@@ -50,7 +51,6 @@ class RankingBloc extends Bloc<RankingEvent, RankingState> {
     SaveRanking event,
     Emitter<RankingState> emit,
   ) async {
-    /*
     final failureOrUser = await _auth.getSignedUser();
     failureOrUser.fold(
       (l) => add(
@@ -58,7 +58,7 @@ class RankingBloc extends Bloc<RankingEvent, RankingState> {
       ),
       (user) async {
         final ranking = Ranking(
-          user: user.username,
+          username: user.username,
           numberOfMovements: event.numberOfMovements,
         );
         await _rankingRepository.create(ranking);
@@ -67,7 +67,5 @@ class RankingBloc extends Bloc<RankingEvent, RankingState> {
         );
       },
     );
-
-     */
   }
 }

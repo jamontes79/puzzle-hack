@@ -27,7 +27,10 @@ class RankingDTO extends Equatable {
   factory RankingDTO.fromDomain(Ranking ranking) {
     return RankingDTO(
       id: ranking.id,
-      username: ranking.user,
+      username: ranking.username.substring(
+        0,
+        ranking.username.indexOf('@'),
+      ),
       numberOfMovements: ranking.numberOfMovements,
     );
   }
@@ -51,14 +54,14 @@ class RankingDTO extends Equatable {
   Ranking toDomain() {
     return Ranking(
       id: id,
-      user: username,
+      username: username,
       numberOfMovements: numberOfMovements,
     );
   }
 
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
-      'user': username,
+      'username': username,
       'numberOfMovements': numberOfMovements,
     };
   }
