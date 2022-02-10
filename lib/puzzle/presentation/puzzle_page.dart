@@ -20,6 +20,7 @@ class PuzzlePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final puzzleSize = PuzzleSizes.getPuzzleSize(context);
+    late int currentLevel;
     return MultiBlocProvider(
       providers: [
         BlocProvider(
@@ -35,59 +36,64 @@ class PuzzlePage extends StatelessWidget {
           create: (context) => getIt<RankingBloc>(),
         ),
       ],
-      child: BlocBuilder<AuthBloc, AuthState>(
-        builder: (context, state) {
-          return ScaffoldGradientBackground(
-            gradient: const LinearGradient(
-              begin: Alignment.topRight,
-              end: Alignment.bottomLeft,
-              colors: [
-                Color.fromARGB(255, 19, 74, 159),
-                Color.fromARGB(255, 109, 184, 246),
-              ],
-            ),
-            appBar: AppBar(
-              title: const Text('Puzzle Challenge'),
-              actions: [
-                PopupMenuButton(
-                  color: const Color.fromARGB(255, 109, 184, 246),
-                  icon: const Icon(Icons.more_vert),
-                  onSelected: (value) {
-                    if (value == 'Settings') {
-                      _showSettingsDialog(context);
-                    } else if (value == 'Login') {
-                      Navigator.of(context).pushReplacementNamed(
-                        RouteGenerator.loginPage,
-                      );
-                    } else if (value == 'Logout') {
-                      _showLogoutDialog(context);
-                    } else if (value == 'Ranking') {
-                      _showRankingDialog(context);
-                    }
-                  },
-                  itemBuilder: (context) => [
-                    const PopupMenuItem(
-                      value: 'Settings',
-                      child: Text('Settings'),
-                    ),
-                    const PopupMenuItem(
-                      value: 'Ranking',
-                      // enabled: state is Authenticated,
-                      child: Text('Ranking'),
-                    ),
-                    PopupMenuItem(
-                      value: state is Authenticated ? 'Logout' : 'Login',
-                      child: Text(
-                        state is Authenticated ? 'Logout' : 'Login',
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-            body: const PuzzleView(),
-          );
+      child: BlocListener<PuzzleBloc, PuzzleState>(
+        listener: (context, state) {
+          currentLevel = state.level;
         },
+        child: BlocBuilder<AuthBloc, AuthState>(
+          builder: (context, state) {
+            return ScaffoldGradientBackground(
+              gradient: const LinearGradient(
+                begin: Alignment.topRight,
+                end: Alignment.bottomLeft,
+                colors: [
+                  Color.fromARGB(255, 19, 74, 159),
+                  Color.fromARGB(255, 109, 184, 246),
+                ],
+              ),
+              appBar: AppBar(
+                title: const Text('Puzzle Challenge'),
+                actions: [
+                  PopupMenuButton(
+                    color: const Color.fromARGB(255, 109, 184, 246),
+                    icon: const Icon(Icons.more_vert),
+                    onSelected: (value) {
+                      if (value == 'Settings') {
+                        _showSettingsDialog(context);
+                      } else if (value == 'Login') {
+                        Navigator.of(context).pushReplacementNamed(
+                          RouteGenerator.loginPage,
+                        );
+                      } else if (value == 'Logout') {
+                        _showLogoutDialog(context);
+                      } else if (value == 'Ranking') {
+                        _showRankingDialog(context, currentLevel);
+                      }
+                    },
+                    itemBuilder: (context) => [
+                      const PopupMenuItem(
+                        value: 'Settings',
+                        child: Text('Settings'),
+                      ),
+                      const PopupMenuItem(
+                        value: 'Ranking',
+                        // enabled: state is Authenticated,
+                        child: Text('Ranking'),
+                      ),
+                      PopupMenuItem(
+                        value: state is Authenticated ? 'Logout' : 'Login',
+                        child: Text(
+                          state is Authenticated ? 'Logout' : 'Login',
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+              body: const PuzzleView(),
+            );
+          },
+        ),
       ),
     );
   }
@@ -107,7 +113,7 @@ class PuzzlePage extends StatelessWidget {
     );
   }
 
-  Future<void> _showRankingDialog(BuildContext context) async {
+  Future<void> _showRankingDialog(BuildContext context, int level) async {
     await showGeneralDialog(
       context: context,
       pageBuilder: (
@@ -117,7 +123,7 @@ class PuzzlePage extends StatelessWidget {
       ) {
         return RankingDialog(
           key: const Key('ranking_dialog'),
-          level: 1,
+          level: level,
         );
       },
     );
