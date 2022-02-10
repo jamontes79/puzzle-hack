@@ -54,7 +54,11 @@ class PuzzleBoard extends StatelessWidget {
               },
             );
           }
-        } else {}
+        } else {
+          if (_allowedPlatformToUseMicro()) {
+            speechRecognition.stopListening();
+          }
+        }
       },
       child: SizedBox(
         width: boardSize,
@@ -73,6 +77,9 @@ class PuzzleBoard extends StatelessWidget {
                           Puzzle.alphabet.keys.firstWhere(
                             (k) => Puzzle.alphabet[k] == x,
                           ),
+                          style: const TextStyle().copyWith(
+                            color: Colors.white,
+                          ),
                         ),
                       ),
                     ),
@@ -86,6 +93,9 @@ class PuzzleBoard extends StatelessWidget {
                       child: Center(
                         child: Text(
                           (x + 1).toString(),
+                          style: const TextStyle().copyWith(
+                            color: Colors.white,
+                          ),
                         ),
                       ),
                     ),

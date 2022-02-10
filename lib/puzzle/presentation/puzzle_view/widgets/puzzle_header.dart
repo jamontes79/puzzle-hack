@@ -7,7 +7,9 @@ class PuzzleHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       'Level $level',
-      style: Theme.of(context).textTheme.headline4,
+      style: Theme.of(context).textTheme.headline4?.copyWith(
+            color: Colors.white,
+          ),
     );
   }
 }

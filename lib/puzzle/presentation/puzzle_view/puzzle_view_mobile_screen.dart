@@ -44,6 +44,7 @@ class PuzzleViewMobileScreen extends StatelessWidget {
                             'Tiles Correct: ${state.tilesCorrect}\n',
                             style: const TextStyle().copyWith(
                               fontSize: 18,
+                              color: Colors.white,
                             ),
                           ),
                           Image.asset(

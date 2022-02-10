@@ -55,7 +55,6 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
     emit(
       state.copyWith(
         loading: true,
-        level: event.level,
         solved: false,
       ),
     );
@@ -76,6 +75,7 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
     }
     emit(
       state.copyWith(
+        level: event.level,
         puzzle: puzzleShuffle,
         tilesCorrect: puzzleShuffle.tilesCorrect,
         loading: false,

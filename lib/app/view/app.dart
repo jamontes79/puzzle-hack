@@ -45,10 +45,13 @@ class App extends StatelessWidget {
               colorScheme: ColorScheme.fromSwatch(
                 accentColor: const Color(0xFF13B9FF),
               ),
+              /*
               textTheme: Theme.of(context).textTheme.apply(
                     bodyColor: Colors.white,
                     displayColor: Colors.white,
                   ),
+
+               */
               outlinedButtonTheme: OutlinedButtonThemeData(
                 style: OutlinedButton.styleFrom(
                   primary: Colors.white,

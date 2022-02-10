@@ -45,6 +45,7 @@ class PuzzleViewNormalScreen extends StatelessWidget {
                                 'Tiles Correct: ${state.tilesCorrect}',
                                 style: const TextStyle().copyWith(
                                   fontSize: 18,
+                                  color: Colors.white,
                                 ),
                               ),
                               const SizedBox(

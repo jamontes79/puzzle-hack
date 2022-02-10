@@ -1,3 +1,4 @@
+import 'package:confetti/confetti.dart';
 import 'package:cool_alert/cool_alert.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -37,7 +38,11 @@ class PuzzlePage extends StatelessWidget {
         ),
       ],
       child: BlocListener<PuzzleBloc, PuzzleState>(
+        listenWhen: (oldState, newState) {
+          return oldState.level != newState.level;
+        },
         listener: (context, state) {
+          Navigator.of(context, rootNavigator: true).pop();
           currentLevel = state.level;
         },
         child: BlocBuilder<AuthBloc, AuthState>(
@@ -182,6 +187,8 @@ class PuzzleView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final _controller =
+        ConfettiController(duration: const Duration(seconds: 10));
     return BlocListener<PuzzleBloc, PuzzleState>(
       listener: (context, state) {
         if (state.solved) {
@@ -191,12 +198,17 @@ class PuzzleView extends StatelessWidget {
                   level: state.level,
                 ),
               );
+
+          _controller.play();
+
           CoolAlert.show(
             context: context,
             type: CoolAlertType.success,
+            backgroundColor: Theme.of(context).primaryColor,
             text: "Level ${state.level} completed! Let's go to the next level!",
             onConfirmBtnTap: () {
-              Navigator.of(context, rootNavigator: true).pop();
+              _controller.stop();
+
               context.read<PuzzleBloc>().add(
                     InitializePuzzle(
                       level: state.level + 1,
@@ -207,7 +219,22 @@ class PuzzleView extends StatelessWidget {
           );
         }
       },
-      child: const PuzzleResponsiveView(),
+      child: Stack(
+        children: [
+          const PuzzleResponsiveView(),
+          Align(
+            alignment: Alignment.topCenter,
+            child: ConfettiWidget(
+              confettiController: _controller,
+              blastDirectionality: BlastDirectionality
+                  .explosive, // don't specify a direction, blast randomly
+              shouldLoop:
+                  true, // start again as soon as the animation is finished
+              // define a custom shape/path.
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
