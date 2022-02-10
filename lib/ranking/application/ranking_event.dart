@@ -5,7 +5,8 @@ abstract class RankingEvent extends Equatable {
 }
 
 class RetrieveRanking extends RankingEvent {
-  const RetrieveRanking();
+  const RetrieveRanking(this.level);
+  final int level;
   @override
   List<Object?> get props => [];
 }
@@ -20,8 +21,9 @@ class RankingReceived extends RankingEvent {
 }
 
 class SaveRanking extends RankingEvent {
-  const SaveRanking(this.numberOfMovements);
+  const SaveRanking({required this.numberOfMovements, required this.level});
   final int numberOfMovements;
+  final int level;
   @override
   List<Object?> get props => [];
 }

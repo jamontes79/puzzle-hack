@@ -7,6 +7,7 @@ class RankingDTO extends Equatable {
     this.id = '',
     required this.username,
     required this.numberOfMovements,
+    required this.level,
   });
 
   factory RankingDTO.fromJson(Map<String, dynamic> json) {
@@ -14,6 +15,7 @@ class RankingDTO extends Equatable {
       id: (json['id'] as String?) ?? '',
       username: json['username'] as String,
       numberOfMovements: json['numberOfMovements'] as int,
+      level: json['level'] as int,
     );
   }
   factory RankingDTO.fromFirestore(
@@ -32,22 +34,25 @@ class RankingDTO extends Equatable {
         ranking.username.indexOf('@'),
       ),
       numberOfMovements: ranking.numberOfMovements,
+      level: ranking.level,
     );
   }
 
   final String id;
   final String username;
   final int numberOfMovements;
-
+  final int level;
   RankingDTO copyWith({
     String? id,
     String? username,
     int? numberOfMovements,
+    int? level,
   }) {
     return RankingDTO(
       id: id ?? this.id,
       username: username ?? this.username,
       numberOfMovements: numberOfMovements ?? this.numberOfMovements,
+      level: level ?? this.level,
     );
   }
 
@@ -56,6 +61,7 @@ class RankingDTO extends Equatable {
       id: id,
       username: username,
       numberOfMovements: numberOfMovements,
+      level: level,
     );
   }
 
@@ -63,6 +69,7 @@ class RankingDTO extends Equatable {
     return <String, dynamic>{
       'username': username,
       'numberOfMovements': numberOfMovements,
+      'level': level,
     };
   }
 

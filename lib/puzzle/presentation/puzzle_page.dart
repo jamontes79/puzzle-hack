@@ -32,10 +32,7 @@ class PuzzlePage extends StatelessWidget {
             ),
         ),
         BlocProvider(
-          create: (context) => getIt<RankingBloc>()
-            ..add(
-              const RetrieveRanking(),
-            ),
+          create: (context) => getIt<RankingBloc>(),
         ),
       ],
       child: BlocBuilder<AuthBloc, AuthState>(
@@ -118,8 +115,9 @@ class PuzzlePage extends StatelessWidget {
         Animation animation,
         Animation secondaryAnimation,
       ) {
-        return const RankingDialog(
-          key: Key('ranking_dialog'),
+        return RankingDialog(
+          key: const Key('ranking_dialog'),
+          level: 1,
         );
       },
     );
@@ -183,7 +181,8 @@ class PuzzleView extends StatelessWidget {
         if (state.solved) {
           context.read<RankingBloc>().add(
                 SaveRanking(
-                  state.currentMoves,
+                  numberOfMovements: state.currentMoves,
+                  level: state.level,
                 ),
               );
           CoolAlert.show(

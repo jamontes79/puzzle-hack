@@ -5,14 +5,14 @@ import 'package:puzzle/l10n/l10n.dart';
 import 'package:puzzle/ranking/application/ranking_bloc.dart';
 
 class RankingDialog extends StatelessWidget {
-  const RankingDialog({Key? key}) : super(key: key);
-
+  const RankingDialog({Key? key, required this.level}) : super(key: key);
+  final int level;
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => getIt<RankingBloc>()
         ..add(
-          const RetrieveRanking(),
+          RetrieveRanking(level),
         ),
       child: _buildDialog(context),
     );

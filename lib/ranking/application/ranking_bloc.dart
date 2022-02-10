@@ -28,7 +28,7 @@ class RankingBloc extends Bloc<RankingEvent, RankingState> {
     emit(
       RankingLoading(),
     );
-    _rankingRepository.watchAll().listen((failureOrRanking) {
+    _rankingRepository.watchAll(event.level).listen((failureOrRanking) {
       add(
         RankingReceived(failureOrRanking),
       );
@@ -54,16 +54,17 @@ class RankingBloc extends Bloc<RankingEvent, RankingState> {
     final failureOrUser = await _auth.getSignedUser();
     failureOrUser.fold(
       (l) => add(
-        const RetrieveRanking(),
+        RetrieveRanking(event.level),
       ),
       (user) async {
         final ranking = Ranking(
           username: user.username,
           numberOfMovements: event.numberOfMovements,
+          level: event.level,
         );
         await _rankingRepository.create(ranking);
         add(
-          const RetrieveRanking(),
+          RetrieveRanking(event.level),
         );
       },
     );

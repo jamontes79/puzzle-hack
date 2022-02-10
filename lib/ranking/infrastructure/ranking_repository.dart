@@ -15,9 +15,9 @@ class RankingRepository implements IRanking {
   final FirebaseFirestore _firebaseFirestore;
 
   @override
-  Stream<Either<RankingFailure, List<Ranking>>> watchAll() async* {
+  Stream<Either<RankingFailure, List<Ranking>>> watchAll(int level) async* {
     yield* _firebaseFirestore
-        .collection('ranking')
+        .collection('ranking$level')
         .orderBy('numberOfMovements', descending: false)
         .limit(5)
         .snapshots()
@@ -43,10 +43,14 @@ class RankingRepository implements IRanking {
   @override
   Future<Either<RankingFailure, Unit>> create(Ranking ranking) async {
     final rankingDTO = RankingDTO.fromDomain(ranking);
-    final inserted = await _firebaseFirestore.collection('ranking').add(
-          rankingDTO.toJson(),
-        );
-    await _firebaseFirestore.collection('ranking').doc(inserted.id).set(
+    final inserted =
+        await _firebaseFirestore.collection('ranking${ranking.level}').add(
+              rankingDTO.toJson(),
+            );
+    await _firebaseFirestore
+        .collection('ranking${ranking.level}')
+        .doc(inserted.id)
+        .set(
           rankingDTO.copyWith(id: inserted.id).toJson(),
         );
     return right(unit);
