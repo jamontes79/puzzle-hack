@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/foundation.dart';
 import 'package:puzzle/puzzle/domain/models/puzzle.dart';
 import 'package:puzzle/puzzle/domain/models/tile_puzzle.dart';
 import 'package:puzzle/puzzle/infrastructure/crop_image.dart';
@@ -28,6 +29,7 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
   }
 
   final CropImage _cropImage;
+
   int _puzzleDimensionFromLevel(final int level) {
     return level + 1;
   }
@@ -52,27 +54,29 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
     InitializePuzzle event,
     Emitter<PuzzleState> emit,
   ) async {
+    print('init');
     emit(
       state.copyWith(
         loading: true,
         solved: false,
       ),
     );
-    final imageParts = await _cropImage.splitImage(
-      assetName: _puzzleImageFromLevel(event.level),
-      pieceCount: _puzzleDimensionFromLevel(event.level),
+    final splitImageInfo = SplitImageInfo(
+      _puzzleImageFromLevel(event.level),
+      _puzzleDimensionFromLevel(event.level),
     );
-    final puzzle = state.puzzle.init(
+    final imageParts = await compute(_cropImage.splitImage, splitImageInfo);
+    final puzzleConfiguration = PuzzleConfiguration(
       dimension: _puzzleDimensionFromLevel(event.level),
       imageParts: imageParts,
       size: event.size,
       image: _puzzleImageFromLevel(event.level),
     );
-    var puzzleShuffle = puzzle.shuffle();
-    while (!puzzleShuffle.isSolvable() &&
-        puzzleShuffle.tilesCorrect == puzzleShuffle.tiles.length) {
-      puzzleShuffle = puzzle.shuffle();
-    }
+    final puzzleShuffle = await compute(
+      state.puzzle.init,
+      puzzleConfiguration,
+    );
+
     emit(
       state.copyWith(
         level: event.level,

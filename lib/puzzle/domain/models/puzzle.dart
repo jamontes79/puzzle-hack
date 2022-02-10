@@ -6,6 +6,20 @@ import 'package:puzzle/extensions/list_extension.dart';
 import 'package:puzzle/puzzle/domain/models/position.dart';
 import 'package:puzzle/puzzle/domain/models/tile_puzzle.dart';
 
+class PuzzleConfiguration {
+  const PuzzleConfiguration({
+    required this.dimension,
+    required this.imageParts,
+    required this.size,
+    required this.image,
+  });
+
+  final int dimension;
+  final List<Uint8List> imageParts;
+  final double size;
+  final String image;
+}
+
 class Puzzle extends Equatable {
   const Puzzle({
     required this.image,
@@ -90,12 +104,14 @@ class Puzzle extends Equatable {
     return sqrt(tiles.length).toInt();
   }
 
-  Puzzle init({
-    required int dimension,
-    required List<Uint8List> imageParts,
-    required double size,
-    required String image,
-  }) {
+  Puzzle init(
+    PuzzleConfiguration configuration,
+  ) {
+    final dimension = configuration.dimension;
+    final imageParts = configuration.imageParts;
+
+    final size = configuration.size;
+    final image = configuration.image;
     final tiles = <TilePuzzle>[];
     for (var i = 0; i < dimension; i++) {
       for (var j = 0; j < dimension; j++) {
@@ -117,11 +133,17 @@ class Puzzle extends Equatable {
     final numberOfTilesCorrect = tiles.where(
       (element) => element.currentPosition == element.correctPosition,
     );
-    return copyWith(
+    final puzzle = copyWith(
       tiles: tiles,
       tilesCorrect: numberOfTilesCorrect.length,
       image: image,
     );
+    var puzzleShuffle = puzzle.shuffle();
+    while (!puzzleShuffle.isSolvable() &&
+        puzzleShuffle.tilesCorrect == puzzleShuffle.tiles.length) {
+      puzzleShuffle = puzzle.shuffle();
+    }
+    return puzzleShuffle;
   }
 
   Puzzle copyWith({
