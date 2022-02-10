@@ -16,6 +16,16 @@ class SpeechRecognition implements ISpeechRecognition {
   int _previousLastIndex = -1;
   int _depthParsedPreviousLastElement = 0;
   static bool _initialized = false;
+
+  @override
+  void stopListening() {
+    if (_initialized) {
+      _speechToText.stop();
+      _sendCommand = null;
+      _initialized = false;
+    }
+  }
+
   @override
   void initialize({required Function(String) sendCommand}) {
     if (!_initialized) {

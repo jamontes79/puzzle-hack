@@ -12,7 +12,6 @@ part 'settings_state.dart';
 @injectable
 class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
   SettingsBloc(this._accessibility) : super(const SettingsState()) {
-    on<ChangeShortcutsEvent>(_onChangeShortcutsEvent);
     on<ChangeVoiceCommandEvent>(_onChangeVoiceCommandEvent);
     on<ChangeStyleEvent>(_onChangeStyleEvent);
     on<RequestAccessibilitySettings>(_onRequestAccessibilitySettings);
@@ -26,7 +25,6 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
   ) async {
     await _accessibility.save(
       AccessibilitySettings(
-        keyboardShortcuts: state.shortcuts,
         voiceCommands: event.value,
         darkMode: state.darkMode,
       ),
@@ -43,7 +41,6 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
   ) async {
     await _accessibility.save(
       AccessibilitySettings(
-        keyboardShortcuts: state.shortcuts,
         voiceCommands: state.voiceCommands,
         darkMode: event.darkMode,
       ),
@@ -72,18 +69,8 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
         state.copyWith(
           darkMode: accessibility.darkMode,
           voiceCommands: accessibility.voiceCommands,
-          shortcuts: accessibility.keyboardShortcuts,
         ),
       ),
-    );
-  }
-
-  FutureOr<void> _onChangeShortcutsEvent(
-    ChangeShortcutsEvent event,
-    Emitter<SettingsState> emit,
-  ) {
-    emit(
-      state.copyWith(shortcuts: event.value),
     );
   }
 
@@ -93,7 +80,6 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
   ) async {
     await _accessibility.save(
       AccessibilitySettings(
-        keyboardShortcuts: state.shortcuts,
         voiceCommands: state.voiceCommands,
         darkMode: state.darkMode,
       ),

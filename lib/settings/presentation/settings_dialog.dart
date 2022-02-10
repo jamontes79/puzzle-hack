@@ -45,27 +45,6 @@ class SettingsDialog extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    l10n.settingsShortCuts,
-                    key: const Key('accessibility_dialog_shortcuts'),
-                    style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                          color: Colors.black,
-                        ),
-                  ),
-                  Switch(
-                    key: const Key('accessibility_dialog_shortcuts_switch'),
-                    onChanged: (bool value) {
-                      context
-                          .read<SettingsBloc>()
-                          .add(ChangeShortcutsEvent(value: value));
-                    },
-                    value: state.shortcuts,
-                  ),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
                     l10n.settingsVoiceCommand,
                     key: const Key('accessibility_dialog_plaintext_text'),
                     style: Theme.of(context).textTheme.bodyText1?.copyWith(

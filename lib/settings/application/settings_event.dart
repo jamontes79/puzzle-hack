@@ -18,13 +18,6 @@ class ChangeStyleEvent extends SettingsEvent {
   List<Object?> get props => [darkMode];
 }
 
-class ChangeShortcutsEvent extends SettingsEvent {
-  const ChangeShortcutsEvent({required this.value});
-  final bool value;
-  @override
-  List<Object?> get props => [value];
-}
-
 class RequestAccessibilitySettings extends SettingsEvent {
   const RequestAccessibilitySettings();
   @override
