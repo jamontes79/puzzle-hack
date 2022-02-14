@@ -139,7 +139,7 @@ class Puzzle extends Equatable {
       image: image,
     );
     var puzzleShuffle = puzzle.shuffle();
-    while (!puzzleShuffle.isSolvable() &&
+    while (!puzzleShuffle.isSolvable() ||
         puzzleShuffle.tilesCorrect == puzzleShuffle.tiles.length) {
       puzzleShuffle = puzzle.shuffle();
     }
@@ -281,11 +281,11 @@ class Puzzle extends Equatable {
     if (coordinate.length > 1) {
       final xChar = coordinate.substring(1);
       final yChar = coordinate.substring(0, 1);
-      final x = alphabet[yChar];
-      final y = int.tryParse(xChar);
+      final y = alphabet[yChar];
+      final x = int.tryParse(xChar);
 
-      if (x != null && y != null) {
-        final findPosition = Position(x: x, y: y - 1);
+      if (y != null && x != null) {
+        final findPosition = Position(x: x - 1, y: y);
         try {
           final tile = tiles.firstWhere(
             (element) => element.currentPosition == findPosition,

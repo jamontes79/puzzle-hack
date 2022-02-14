@@ -25,13 +25,7 @@ class PuzzleBoard extends StatelessWidget {
   int _getPositionInList(int dimension, int x, int y) => (dimension * x) + y;
 
   bool _allowedPlatformToUseMicro() {
-    if (!kIsWeb) {
-      if (Platform.isAndroid || Platform.isIOS) {
-        return true;
-      }
-      return false;
-    }
-    return true;
+    return kIsWeb || Platform.isAndroid || Platform.isIOS;
   }
 
   @override
@@ -46,16 +40,22 @@ class PuzzleBoard extends StatelessWidget {
       listener: (context, state) {
         if (state.voiceCommands) {
           if (_allowedPlatformToUseMicro()) {
+            context.read<PuzzleBloc>().add(
+                  const EnableVoiceCommands(),
+                );
             speechRecognition.initialize(
               sendCommand: (word) {
                 context.read<PuzzleBloc>().add(
-                      MoveTile(word),
+                      MoveTileWithVoiceCommand(word),
                     );
               },
             );
           }
         } else {
           if (_allowedPlatformToUseMicro()) {
+            context.read<PuzzleBloc>().add(
+                  const DisableVoiceCommands(),
+                );
             speechRecognition.stopListening();
           }
         }

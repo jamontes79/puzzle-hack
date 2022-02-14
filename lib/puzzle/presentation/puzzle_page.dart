@@ -21,7 +21,7 @@ class PuzzlePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final puzzleSize = PuzzleSizes.getPuzzleSize(context);
-    late int currentLevel;
+    var currentLevel = 1;
     return MultiBlocProvider(
       providers: [
         BlocProvider(
@@ -95,7 +95,9 @@ class PuzzlePage extends StatelessWidget {
                   ),
                 ],
               ),
-              body: const PuzzleView(),
+              body: const SingleChildScrollView(
+                child: PuzzleView(),
+              ),
             );
           },
         ),

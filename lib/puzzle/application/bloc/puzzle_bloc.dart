@@ -25,7 +25,9 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
     on<InitializePuzzle>(_onInitializePuzzle);
     on<SwapTile>(_onSwapTile);
     on<ShufflePuzzle>(_onShufflePuzzle);
-    on<MoveTile>(_onMoveTile);
+    on<MoveTileWithVoiceCommand>(_onMoveTileWithVoiceCommand);
+    on<EnableVoiceCommands>(_onEnableVoiceCommands);
+    on<DisableVoiceCommands>(_onDisableVoiceCommand);
   }
 
   final CropImage _cropImage;
@@ -90,7 +92,7 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
 
   FutureOr<void> _onSwapTile(SwapTile event, Emitter<PuzzleState> emit) {
     emit(
-      _moveTile(event.tile),
+      _moveTile(tile: event.tile),
     );
   }
 
@@ -114,25 +116,30 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
     );
   }
 
-  FutureOr<void> _onMoveTile(
-    MoveTile event,
+  FutureOr<void> _onMoveTileWithVoiceCommand(
+    MoveTileWithVoiceCommand event,
     Emitter<PuzzleState> emit,
   ) {
-    final tile = state.puzzle.getFromStringCoordinate(event.coordinate);
+    final tile = state.puzzle.getFromStringCoordinate(event.voiceCommand);
     if (tile != null) {
       emit(
-        _moveTile(tile),
+        _moveTile(
+          tile: tile,
+          voiceCommand: event.voiceCommand,
+        ),
       );
     } else {
       emit(
         state.copyWith(
           canMakeMove: false,
+          lastVoiceCommand: event.voiceCommand,
+          errorVoiceCommand: true,
         ),
       );
     }
   }
 
-  PuzzleState _moveTile(TilePuzzle tile) {
+  PuzzleState _moveTile({required TilePuzzle tile, String? voiceCommand}) {
     if (state.puzzle.canMove(tile)) {
       final puzzle = state.puzzle.moveTile(tile);
       return state.copyWith(
@@ -141,11 +148,37 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
         currentMoves: state.currentMoves + 1,
         tilesCorrect: puzzle.tilesCorrect,
         solved: puzzle.tilesCorrect == puzzle.tiles.length,
+        lastVoiceCommand: voiceCommand ?? '',
+        errorVoiceCommand: false,
       );
     } else {
       return state.copyWith(
         canMakeMove: false,
+        lastVoiceCommand: voiceCommand ?? '',
+        errorVoiceCommand: false,
       );
     }
+  }
+
+  FutureOr<void> _onEnableVoiceCommands(
+    EnableVoiceCommands event,
+    Emitter<PuzzleState> emit,
+  ) {
+    emit(
+      state.copyWith(
+        voiceCommands: true,
+      ),
+    );
+  }
+
+  FutureOr<void> _onDisableVoiceCommand(
+    DisableVoiceCommands event,
+    Emitter<PuzzleState> emit,
+  ) {
+    emit(
+      state.copyWith(
+        voiceCommands: false,
+      ),
+    );
   }
 }

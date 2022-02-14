@@ -13,7 +13,23 @@ class PuzzleViewNormalScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<PuzzleBloc, PuzzleState>(
+    return BlocConsumer<PuzzleBloc, PuzzleState>(
+      listenWhen: (oldState, newState) {
+        return newState.voiceCommands;
+      },
+      listener: (context, state) {
+        if (state.voiceCommands &&
+            state.errorVoiceCommand &&
+            state.lastVoiceCommand.isNotEmpty) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(
+                'Voice Command not recognized (${state.lastVoiceCommand})',
+              ),
+            ),
+          );
+        }
+      },
       builder: (context, state) {
         if (state.loading || state.puzzle.image.isEmpty) {
           return const LoadingPuzzle();
@@ -46,6 +62,17 @@ class PuzzleViewNormalScreen extends StatelessWidget {
                                 style: const TextStyle().copyWith(
                                   fontSize: 18,
                                   color: Colors.white,
+                                ),
+                              ),
+                              Visibility(
+                                visible: state.voiceCommands,
+                                child: Text(
+                                  'Last Voice Command: '
+                                  '${state.lastVoiceCommand}',
+                                  style: const TextStyle().copyWith(
+                                    fontSize: 18,
+                                    color: Colors.white,
+                                  ),
                                 ),
                               ),
                               const SizedBox(

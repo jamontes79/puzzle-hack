@@ -36,11 +36,25 @@ class ShufflePuzzle extends PuzzleEvent {
   List<Object?> get props => [];
 }
 
-class MoveTile extends PuzzleEvent {
-  const MoveTile(this.coordinate);
+class MoveTileWithVoiceCommand extends PuzzleEvent {
+  const MoveTileWithVoiceCommand(this.voiceCommand);
 
-  final String coordinate;
+  final String voiceCommand;
 
   @override
-  List<Object?> get props => [coordinate];
+  List<Object?> get props => [voiceCommand];
+}
+
+class EnableVoiceCommands extends PuzzleEvent {
+  const EnableVoiceCommands();
+
+  @override
+  List<Object?> get props => [];
+}
+
+class DisableVoiceCommands extends PuzzleEvent {
+  const DisableVoiceCommands();
+
+  @override
+  List<Object?> get props => [];
 }

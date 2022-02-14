@@ -5,12 +5,17 @@ class LoadingPuzzle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Text(
-        'Loading puzzle...\nWait a second, please',
-        textAlign: TextAlign.center,
-        style: const TextStyle().copyWith(
-          fontSize: 24,
+    final size = MediaQuery.of(context).size;
+    return SizedBox(
+      height: size.height,
+      child: Center(
+        child: Text(
+          'Loading puzzle...\nWait a second, please',
+          textAlign: TextAlign.center,
+          style: const TextStyle().copyWith(
+            fontSize: 24,
+            color: Colors.white,
+          ),
         ),
       ),
     );
