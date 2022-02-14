@@ -90,7 +90,7 @@ class RegisterView extends StatelessWidget {
                     child: ListView(
                       children: [
                         Text(
-                          l10n.loginAppBarTitle,
+                          l10n.appBarTitle,
                           textAlign: TextAlign.center,
                           style: const TextStyle(
                             fontSize: 80,

@@ -46,13 +46,13 @@ class SettingsDialog extends StatelessWidget {
                 children: [
                   Text(
                     l10n.settingsVoiceCommand,
-                    key: const Key('accessibility_dialog_plaintext_text'),
+                    key: const Key('accessibility_dialog_voice_command_text'),
                     style: Theme.of(context).textTheme.bodyText1?.copyWith(
                           color: Colors.black,
                         ),
                   ),
                   Switch(
-                    key: const Key('accessibility_dialog_plaintext_switch'),
+                    key: const Key('accessibility_dialog_voice_command_switch'),
                     onChanged: (bool value) {
                       context
                           .read<SettingsBloc>()

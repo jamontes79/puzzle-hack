@@ -20,6 +20,7 @@ class PuzzlePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     final puzzleSize = PuzzleSizes.getPuzzleSize(context);
     var currentLevel = 1;
     return MultiBlocProvider(
@@ -57,7 +58,7 @@ class PuzzlePage extends StatelessWidget {
                 ],
               ),
               appBar: AppBar(
-                title: const Text('Puzzle Challenge'),
+                title: Text(l10n.appBarTitle),
                 actions: [
                   PopupMenuButton(
                     color: const Color.fromARGB(255, 109, 184, 246),
@@ -76,19 +77,21 @@ class PuzzlePage extends StatelessWidget {
                       }
                     },
                     itemBuilder: (context) => [
-                      const PopupMenuItem(
+                      PopupMenuItem(
                         value: 'Settings',
-                        child: Text('Settings'),
+                        child: Text(l10n.menuSettings),
                       ),
-                      const PopupMenuItem(
+                      PopupMenuItem(
                         value: 'Ranking',
                         // enabled: state is Authenticated,
-                        child: Text('Ranking'),
+                        child: Text(l10n.menuRanking),
                       ),
                       PopupMenuItem(
                         value: state is Authenticated ? 'Logout' : 'Login',
                         child: Text(
-                          state is Authenticated ? 'Logout' : 'Login',
+                          state is Authenticated
+                              ? l10n.menuLogout
+                              : l10n.menuLogin,
                         ),
                       ),
                     ],

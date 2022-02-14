@@ -94,7 +94,7 @@ class LoginView extends StatelessWidget {
                     child: ListView(
                       children: [
                         Text(
-                          l10n.loginAppBarTitle,
+                          l10n.appBarTitle,
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontSize: 80,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:puzzle/l10n/l10n.dart';
 import 'package:puzzle/puzzle/application/bloc/puzzle_bloc.dart';
 import 'package:puzzle/puzzle/presentation/puzzle_board/puzzle_board.dart';
 import 'package:puzzle/puzzle/presentation/puzzle_view/widgets/dash_logo.dart';
@@ -13,7 +14,25 @@ class PuzzleViewMobileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<PuzzleBloc, PuzzleState>(
+    final l10n = context.l10n;
+    return BlocConsumer<PuzzleBloc, PuzzleState>(
+      listenWhen: (oldState, newState) {
+        return newState.voiceCommands;
+      },
+      listener: (context, state) {
+        if (state.voiceCommands &&
+            state.errorVoiceCommand &&
+            state.lastVoiceCommand.isNotEmpty) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(
+                '${l10n.puzzleVoiceCommandNotRecognized} '
+                '(${state.lastVoiceCommand})',
+              ),
+            ),
+          );
+        }
+      },
       builder: (context, state) {
         if (state.loading || state.puzzle.image.isEmpty) {
           return const LoadingPuzzle();
@@ -40,11 +59,24 @@ class PuzzleViewMobileScreen extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            'Number of movements: ${state.currentMoves}\n'
-                            'Tiles Correct: ${state.tilesCorrect}\n',
+                            '${l10n.puzzleNumberOfMovements}: '
+                            '${state.currentMoves}\n'
+                            '${l10n.puzzleTilesCorrect}: '
+                            '${state.tilesCorrect}',
                             style: const TextStyle().copyWith(
                               fontSize: 18,
                               color: Colors.white,
+                            ),
+                          ),
+                          Visibility(
+                            visible: state.voiceCommands,
+                            child: Text(
+                              '${l10n.puzzleLastVoiceCommand}: '
+                              '${state.lastVoiceCommand}',
+                              style: const TextStyle().copyWith(
+                                fontSize: 18,
+                                color: Colors.white,
+                              ),
                             ),
                           ),
                           Image.asset(

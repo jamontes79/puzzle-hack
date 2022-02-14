@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:puzzle/l10n/l10n.dart';
 import 'package:puzzle/puzzle/application/bloc/puzzle_bloc.dart';
 import 'package:puzzle/puzzle/presentation/puzzle_board/puzzle_board.dart';
 import 'package:puzzle/puzzle/presentation/puzzle_view/widgets/dash_logo.dart';
@@ -13,6 +14,7 @@ class PuzzleViewNormalScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     return BlocConsumer<PuzzleBloc, PuzzleState>(
       listenWhen: (oldState, newState) {
         return newState.voiceCommands;
@@ -24,7 +26,8 @@ class PuzzleViewNormalScreen extends StatelessWidget {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text(
-                'Voice Command not recognized (${state.lastVoiceCommand})',
+                '${l10n.puzzleVoiceCommandNotRecognized} '
+                '(${state.lastVoiceCommand})',
               ),
             ),
           );
@@ -57,8 +60,10 @@ class PuzzleViewNormalScreen extends StatelessWidget {
                           Column(
                             children: [
                               Text(
-                                'Number of movements: ${state.currentMoves}\n'
-                                'Tiles Correct: ${state.tilesCorrect}',
+                                '${l10n.puzzleNumberOfMovements}: '
+                                '${state.currentMoves}\n'
+                                '${l10n.puzzleTilesCorrect}: '
+                                '${state.tilesCorrect}',
                                 style: const TextStyle().copyWith(
                                   fontSize: 18,
                                   color: Colors.white,
@@ -67,7 +72,7 @@ class PuzzleViewNormalScreen extends StatelessWidget {
                               Visibility(
                                 visible: state.voiceCommands,
                                 child: Text(
-                                  'Last Voice Command: '
+                                  '${l10n.puzzleLastVoiceCommand}: '
                                   '${state.lastVoiceCommand}',
                                   style: const TextStyle().copyWith(
                                     fontSize: 18,

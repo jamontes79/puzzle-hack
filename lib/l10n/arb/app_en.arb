@@ -1,6 +1,6 @@
 {
     "@@locale": "en",
-    "loginAppBarTitle": "Puzzle Hack",
+    "appBarTitle": "Puzzle Hack",
     "loginFormEmail":  "E-mail",
     "loginFormPassword": "Password",
     "loginFormButton" : "Login",
@@ -26,6 +26,17 @@
     "settingsVoiceCommand": "Voice commands",
     "settingsDarkMode": "Dark mode",
 
-    "rankingTitle" : "Ranking"
-   
+    "rankingTitle" : "Ranking",
+    "puzzleHeader": "Level",
+    "puzzleLoading": "Loading puzzle...\\nWait a second, please",
+    "puzzleVoiceCommandNotRecognized": "Voice Command not recognized",
+    "puzzleNumberOfMovements" : "Number of movements",
+    "puzzleTilesCorrect": "Tiles Correct",
+    "puzzleLastVoiceCommand": "Last Voice Command",
+    "puzzleShuffle": "Shuffle",
+
+    "menuSettings" : "Settings",
+    "menuRanking" : "Ranking",
+    "menuLogout" : "Logout",
+    "menuLogin" : "Login"
 }

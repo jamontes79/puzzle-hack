@@ -56,7 +56,6 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
     InitializePuzzle event,
     Emitter<PuzzleState> emit,
   ) async {
-    print('init');
     emit(
       state.copyWith(
         loading: true,
