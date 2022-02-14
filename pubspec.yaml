@@ -9,12 +9,12 @@ environment:
 dependencies:
   bloc: ^8.0.2
   build_runner: ^2.1.7
-  cloud_firestore: ^3.1.7
+  cloud_firestore: ^3.1.8
   confetti: ^0.6.0
   cool_alert: ^1.1.0
   dartz: ^0.10.1
   equatable: ^2.0.3
-  firebase_auth: ^3.3.6
+  firebase_auth: ^3.3.7
   firebase_core: ^1.12.0
   flutter:
     sdk: flutter
@@ -29,7 +29,7 @@ dependencies:
   intl: ^0.17.0
   scaffold_gradient_background: ^1.0.3+1
   shared_preferences: ^2.0.13
-  speech_to_text: ^5.4.2
+  speech_to_text: ^5.4.3
 
 dev_dependencies:
   bloc_test: ^9.0.2
