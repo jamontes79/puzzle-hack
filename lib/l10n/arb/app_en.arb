@@ -28,7 +28,7 @@
 
     "rankingTitle" : "Ranking",
     "puzzleHeader": "Level",
-    "puzzleLoading": "Loading puzzle...\\nWait a second, please",
+    "puzzleLoading": "Loading puzzle...\nWait a second, please",
     "puzzleVoiceCommandNotRecognized": "Voice Command not recognized",
     "puzzleNumberOfMovements" : "Number of movements",
     "puzzleTilesCorrect": "Tiles Correct",
