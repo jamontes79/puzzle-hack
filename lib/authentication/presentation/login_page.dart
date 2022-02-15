@@ -45,16 +45,16 @@ class LoginView extends StatelessWidget {
     );
     return Scaffold(
       body: Container(
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topRight,
             end: Alignment.bottomLeft,
             colors: [
-              Color.fromARGB(255, 19, 74, 159),
-              Color.fromARGB(255, 109, 184, 246),
+              Theme.of(context).colorScheme.secondary,
+              Theme.of(context).colorScheme.tertiary
             ],
           ),
-          image: DecorationImage(
+          image: const DecorationImage(
             image: AssetImage('assets/images/background.png'),
             fit: BoxFit.fitHeight,
           ),
@@ -80,7 +80,9 @@ class LoginView extends StatelessWidget {
               child: Center(
                 child: Container(
                   decoration: BoxDecoration(
-                    color: const Color.fromRGBO(255, 255, 255, 0.7),
+                    color: Theme.of(context).brightness == Brightness.light
+                        ? const Color.fromRGBO(255, 255, 255, 0.7)
+                        : const Color.fromRGBO(0, 0, 0, 0.7),
                     borderRadius: BorderRadius.circular(8),
                   ),
                   width: ResponsiveHelper.getDevice(context) == Device.mobile
@@ -108,12 +110,18 @@ class LoginView extends StatelessWidget {
                           key: const Key('loginpage_email_field'),
                           controller: _emailTextController,
                           decoration: InputDecoration(
-                            prefixIcon: const Icon(Icons.email),
+                            prefixIcon: const Icon(
+                              Icons.email,
+                            ),
                             labelText: l10n.loginFormEmail,
                           ),
                           keyboardType: TextInputType.emailAddress,
-                          style:
-                              const TextStyle().copyWith(color: Colors.black),
+                          style: const TextStyle().copyWith(
+                            color:
+                                Theme.of(context).brightness == Brightness.light
+                                    ? Colors.black
+                                    : Colors.white,
+                          ),
                         ),
                         const SizedBox(
                           height: 20,
@@ -126,8 +134,12 @@ class LoginView extends StatelessWidget {
                             prefixIcon: const Icon(Icons.lock_outline),
                             labelText: l10n.loginFormPassword,
                           ),
-                          style:
-                              const TextStyle().copyWith(color: Colors.black),
+                          style: const TextStyle().copyWith(
+                            color:
+                                Theme.of(context).brightness == Brightness.light
+                                    ? Colors.black
+                                    : Colors.white,
+                          ),
                         ),
                         const SizedBox(
                           height: 40,
@@ -181,7 +193,7 @@ class LoginView extends StatelessWidget {
                             );
                           },
                           child: Text(
-                            l10n.loginFormGoogleButton,
+                            l10n.loginFormGuessButton,
                             style: const TextStyle(
                               color: Colors.white,
                             ),
@@ -196,8 +208,11 @@ class LoginView extends StatelessWidget {
                           },
                           child: Text(
                             l10n.loginFormRegisterLink,
-                            style: const TextStyle(
-                              color: Colors.black,
+                            style: TextStyle(
+                              color: Theme.of(context).brightness ==
+                                      Brightness.light
+                                  ? Colors.black
+                                  : Colors.white,
                             ),
                           ),
                         ),

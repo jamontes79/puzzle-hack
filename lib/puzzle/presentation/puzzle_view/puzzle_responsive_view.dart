@@ -10,7 +10,7 @@ class PuzzleResponsiveView extends StatelessWidget {
   Widget build(BuildContext context) {
     final device = ResponsiveHelper.getDevice(context);
 
-    if (device == Device.mobile) {
+    if (device != Device.desktop) {
       return const PuzzleViewMobileScreen();
     } else {
       return const PuzzleViewNormalScreen();

@@ -8,6 +8,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:puzzle/app/view/app_theme.dart';
 import 'package:puzzle/authentication/application/auth/auth_bloc.dart';
 import 'package:puzzle/injection/injection.dart';
 import 'package:puzzle/l10n/l10n.dart';
@@ -37,28 +38,9 @@ class App extends StatelessWidget {
       child: BlocBuilder<SettingsBloc, SettingsState>(
         builder: (context, state) {
           return MaterialApp(
-            theme: ThemeData(
-              primaryColor: Colors.blueAccent,
-              appBarTheme: const AppBarTheme(
-                color: Color.fromARGB(255, 19, 74, 159),
-              ),
-              colorScheme: ColorScheme.fromSwatch(
-                accentColor: const Color(0xFF13B9FF),
-              ),
-              /*
-              textTheme: Theme.of(context).textTheme.apply(
-                    bodyColor: Colors.white,
-                    displayColor: Colors.white,
-                  ),
-
-               */
-              outlinedButtonTheme: OutlinedButtonThemeData(
-                style: OutlinedButton.styleFrom(
-                  primary: Colors.white,
-                  side: const BorderSide(color: Colors.white),
-                ),
-              ),
-            ),
+            theme: AppTheme().lightTheme(),
+            darkTheme: AppTheme().darkTheme(),
+            themeMode: state.darkMode ? ThemeMode.dark : ThemeMode.light,
             localizationsDelegates: const [
               AppLocalizations.delegate,
               GlobalMaterialLocalizations.delegate,

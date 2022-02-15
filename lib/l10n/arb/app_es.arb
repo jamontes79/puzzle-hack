@@ -4,7 +4,7 @@
     "loginFormEmail":  "E-mail",
     "loginFormPassword": "Contraseña",
     "loginFormButton" : "Entrar",
-    "loginFormGoogleButton" : "Entrar como invitado",
+    "loginFormGuessButton" : "Entrar como invitado",
     "loginFormRegisterLink" : "¿No tienes una cuenta todavía? Pincha aqui para crear una.",
 
     "registerFormEmail":  "E-mail",

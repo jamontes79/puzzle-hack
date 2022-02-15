@@ -4,7 +4,7 @@
     "loginFormEmail":  "E-mail",
     "loginFormPassword": "Password",
     "loginFormButton" : "Login",
-    "loginFormGoogleButton" : "Enter as guess",
+    "loginFormGuessButton" : "Enter as guess",
     "loginFormRegisterLink" : "You don't have an account yet? Click here to register.",
 
     "registerFormEmail":  "E-mail",

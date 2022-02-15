@@ -34,7 +34,9 @@ class RankingDialog extends StatelessWidget {
               l10n.rankingTitle,
               key: const Key('accessibility_dialog_title'),
               style: Theme.of(context).textTheme.headline6?.copyWith(
-                    color: Colors.black,
+                    color: Theme.of(context).brightness == Brightness.light
+                        ? Colors.black
+                        : Colors.white,
                   ),
             ),
           ),
@@ -60,13 +62,19 @@ class RankingDialog extends StatelessWidget {
                         rankings[i].username,
                         key: const Key('accessibility_dialog_shortcuts'),
                         style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                              color: Colors.black,
+                              color: Theme.of(context).brightness ==
+                                      Brightness.light
+                                  ? Colors.black
+                                  : Colors.white,
                             ),
                       ),
                       Text(
                         '${rankings[i].numberOfMovements} movs.',
                         style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                              color: Colors.black,
+                              color: Theme.of(context).brightness ==
+                                      Brightness.light
+                                  ? Colors.black
+                                  : Colors.white,
                             ),
                       ),
                     ],

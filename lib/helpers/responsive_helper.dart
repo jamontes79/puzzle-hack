@@ -17,7 +17,7 @@ class ResponsiveHelper {
   }
 
   static bool _isTablet(BuildContext context) {
-    return MediaQuery.of(context).size.width < 800;
+    return MediaQuery.of(context).size.width < 820;
   }
 
   static bool isHorizontal(BuildContext context) {

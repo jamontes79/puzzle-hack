@@ -27,7 +27,9 @@ class SettingsDialog extends StatelessWidget {
               l10n.settingsText,
               key: const Key('accessibility_dialog_title'),
               style: Theme.of(context).textTheme.headline6?.copyWith(
-                    color: Colors.black,
+                    color: Theme.of(context).brightness == Brightness.light
+                        ? Colors.black
+                        : Colors.white,
                   ),
             ),
           ),
@@ -48,7 +50,10 @@ class SettingsDialog extends StatelessWidget {
                     l10n.settingsVoiceCommand,
                     key: const Key('accessibility_dialog_voice_command_text'),
                     style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                          color: Colors.black,
+                          color:
+                              Theme.of(context).brightness == Brightness.light
+                                  ? Colors.black
+                                  : Colors.white,
                         ),
                   ),
                   Switch(
@@ -69,7 +74,10 @@ class SettingsDialog extends StatelessWidget {
                     l10n.settingsDarkMode,
                     key: const Key('accessibility_dialog_darkmode_text'),
                     style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                          color: Colors.black,
+                          color:
+                              Theme.of(context).brightness == Brightness.light
+                                  ? Colors.black
+                                  : Colors.white,
                         ),
                   ),
                   Switch(

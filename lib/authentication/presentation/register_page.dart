@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:puzzle/authentication/application/register/register_bloc.dart';
+import 'package:puzzle/helpers/responsive_helper.dart';
 import 'package:puzzle/injection/injection.dart';
 import 'package:puzzle/l10n/l10n.dart';
 import 'package:puzzle/routes/routes.dart';
@@ -51,9 +52,16 @@ class RegisterView extends StatelessWidget {
     });
     return Scaffold(
       body: Container(
-        decoration: const BoxDecoration(
-          color: Colors.lightBlueAccent,
-          image: DecorationImage(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topRight,
+            end: Alignment.bottomLeft,
+            colors: [
+              Theme.of(context).colorScheme.secondary,
+              Theme.of(context).colorScheme.tertiary
+            ],
+          ),
+          image: const DecorationImage(
             image: AssetImage('assets/images/background.png'),
             fit: BoxFit.fitHeight,
           ),
@@ -80,11 +88,17 @@ class RegisterView extends StatelessWidget {
               child: Center(
                 child: Container(
                   decoration: BoxDecoration(
-                    color: const Color.fromRGBO(255, 255, 255, 0.7),
+                    color: Theme.of(context).brightness == Brightness.light
+                        ? const Color.fromRGBO(255, 255, 255, 0.7)
+                        : const Color.fromRGBO(0, 0, 0, 0.7),
                     borderRadius: BorderRadius.circular(8),
                   ),
-                  width: 500,
-                  height: 550,
+                  width: ResponsiveHelper.getDevice(context) == Device.mobile
+                      ? MediaQuery.of(context).size.width
+                      : 500,
+                  height: ResponsiveHelper.getDevice(context) == Device.mobile
+                      ? MediaQuery.of(context).size.height
+                      : 560,
                   child: Padding(
                     padding: const EdgeInsets.all(20),
                     child: ListView(
@@ -92,9 +106,9 @@ class RegisterView extends StatelessWidget {
                         Text(
                           l10n.appBarTitle,
                           textAlign: TextAlign.center,
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontSize: 80,
-                            color: Colors.lightBlue,
+                            color: Theme.of(context).primaryColor,
                           ),
                         ),
                         const SizedBox(
@@ -106,6 +120,12 @@ class RegisterView extends StatelessWidget {
                           decoration: InputDecoration(
                             prefixIcon: const Icon(Icons.email),
                             labelText: l10n.registerFormEmail,
+                          ),
+                          style: const TextStyle().copyWith(
+                            color:
+                                Theme.of(context).brightness == Brightness.light
+                                    ? Colors.black
+                                    : Colors.white,
                           ),
                           keyboardType: TextInputType.emailAddress,
                           validator: (value) {
@@ -122,6 +142,12 @@ class RegisterView extends StatelessWidget {
                           key: const Key('registerpage_password_field'),
                           controller: _passwordTextController,
                           obscureText: true,
+                          style: const TextStyle().copyWith(
+                            color:
+                                Theme.of(context).brightness == Brightness.light
+                                    ? Colors.black
+                                    : Colors.white,
+                          ),
                           decoration: InputDecoration(
                             prefixIcon: const Icon(Icons.lock_outline),
                             labelText: l10n.registerFormPassword,
@@ -140,6 +166,12 @@ class RegisterView extends StatelessWidget {
                           key: const Key('registerpage_confirm_password_field'),
                           controller: _confirmPasswordTextController,
                           obscureText: true,
+                          style: const TextStyle().copyWith(
+                            color:
+                                Theme.of(context).brightness == Brightness.light
+                                    ? Colors.black
+                                    : Colors.white,
+                          ),
                           decoration: InputDecoration(
                             prefixIcon: const Icon(Icons.lock_outline),
                             labelText: l10n.registerFormRepeatPassword,
@@ -190,8 +222,11 @@ class RegisterView extends StatelessWidget {
                           },
                           child: Text(
                             l10n.registerFormLoginLink,
-                            style: const TextStyle(
-                              color: Colors.black,
+                            style: TextStyle(
+                              color: Theme.of(context).brightness ==
+                                      Brightness.light
+                                  ? Colors.black
+                                  : Colors.white,
                             ),
                           ),
                         ),

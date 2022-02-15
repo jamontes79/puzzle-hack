@@ -49,19 +49,19 @@ class PuzzlePage extends StatelessWidget {
         child: BlocBuilder<AuthBloc, AuthState>(
           builder: (context, state) {
             return ScaffoldGradientBackground(
-              gradient: const LinearGradient(
+              gradient: LinearGradient(
                 begin: Alignment.topRight,
                 end: Alignment.bottomLeft,
                 colors: [
-                  Color.fromARGB(255, 19, 74, 159),
-                  Color.fromARGB(255, 109, 184, 246),
+                  Theme.of(context).colorScheme.secondary,
+                  Theme.of(context).colorScheme.tertiary
                 ],
               ),
               appBar: AppBar(
                 title: Text(l10n.appBarTitle),
                 actions: [
                   PopupMenuButton(
-                    color: const Color.fromARGB(255, 109, 184, 246),
+                    color: Theme.of(context).colorScheme.background,
                     icon: const Icon(Icons.more_vert),
                     onSelected: (value) {
                       if (value == 'Settings') {

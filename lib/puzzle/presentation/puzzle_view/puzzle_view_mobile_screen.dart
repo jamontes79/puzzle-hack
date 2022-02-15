@@ -47,7 +47,7 @@ class PuzzleViewMobileScreen extends StatelessWidget {
                     puzzle: state.puzzle,
                     speechRecognition: SpeechRecognition(),
                   ),
-                  const DashLogo(size: 70),
+                  const DashLogo(),
                 ],
               ),
               SizedBox(
