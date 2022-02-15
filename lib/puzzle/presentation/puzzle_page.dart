@@ -192,6 +192,7 @@ class PuzzleView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     final _controller =
         ConfettiController(duration: const Duration(seconds: 10));
     return BlocListener<PuzzleBloc, PuzzleState>(
@@ -205,23 +206,38 @@ class PuzzleView extends StatelessWidget {
               );
 
           _controller.play();
+          if (state.level == 3) {
+            CoolAlert.show(
+              context: context,
+              type: CoolAlertType.success,
+              backgroundColor: Theme.of(context).primaryColor,
+              text: l10n.gameFinished,
+              onConfirmBtnTap: () {
+                _controller.stop();
+                Navigator.of(context, rootNavigator: true).pop();
+              },
+            );
+          } else {
+            CoolAlert.show(
+              context: context,
+              type: CoolAlertType.success,
+              backgroundColor: Theme.of(context).primaryColor,
+              text: l10n.levelCompleted.replaceFirst(
+                '#level#',
+                state.level.toString(),
+              ),
+              onConfirmBtnTap: () {
+                _controller.stop();
 
-          CoolAlert.show(
-            context: context,
-            type: CoolAlertType.success,
-            backgroundColor: Theme.of(context).primaryColor,
-            text: "Level ${state.level} completed! Let's go to the next level!",
-            onConfirmBtnTap: () {
-              _controller.stop();
-
-              context.read<PuzzleBloc>().add(
-                    InitializePuzzle(
-                      level: state.level + 1,
-                      size: PuzzleSizes.getPuzzleSize(context),
-                    ),
-                  );
-            },
-          );
+                context.read<PuzzleBloc>().add(
+                      InitializePuzzle(
+                        level: state.level + 1,
+                        size: PuzzleSizes.getPuzzleSize(context),
+                      ),
+                    );
+              },
+            );
+          }
         }
       },
       child: Stack(

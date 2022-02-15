@@ -38,5 +38,8 @@
     "menuSettings" : "Settings",
     "menuRanking" : "Ranking",
     "menuLogout" : "Logout",
-    "menuLogin" : "Login"
+    "menuLogin" : "Login",
+
+    "levelCompleted" : "Level #level# completed! Let's go to the next level!",
+    "gameFinished": "Congratulations! You've finished the game!!"
 }

@@ -40,5 +40,8 @@
     "menuSettings" : "Configuración",
     "menuRanking" : "Ranking",
     "menuLogout" : "Salir",
-    "menuLogin" : "Acceder"
+    "menuLogin" : "Acceder",
+
+    "levelCompleted" : "¡Nivel #level# completado! Vamos por el siguiente!",
+    "gameFinished": "¡Enhorabuena! Ha completado el juego!!"
 }
