@@ -213,7 +213,6 @@ class PuzzleView extends StatelessWidget {
               backgroundColor: Theme.of(context).primaryColor,
               text: l10n.gameFinished,
               onConfirmBtnTap: () {
-                _controller.stop();
                 Navigator.of(context, rootNavigator: true).pop();
               },
             );
