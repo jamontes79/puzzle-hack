@@ -58,7 +58,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '736252655924',
     projectId: 'puzzlehack-jamontes79',
     storageBucket: 'puzzlehack-jamontes79.appspot.com',
-    iosClientId: '736252655924-sdue4lmbc2ea7a6j1ceiea553ogmee4n.apps.googleusercontent.com',
+    iosClientId:
+        '736252655924-sdue4lmbc2ea7a6j1ceiea553ogmee4n.apps.googleusercontent.com',
     iosBundleId: 'xyz.albertomontesdeoca.puzzle.puzzle',
   );
 
@@ -68,7 +69,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '736252655924',
     projectId: 'puzzlehack-jamontes79',
     storageBucket: 'puzzlehack-jamontes79.appspot.com',
-    iosClientId: '736252655924-sdue4lmbc2ea7a6j1ceiea553ogmee4n.apps.googleusercontent.com',
+    iosClientId:
+        '736252655924-sdue4lmbc2ea7a6j1ceiea553ogmee4n.apps.googleusercontent.com',
     iosBundleId: 'xyz.albertomontesdeoca.puzzle.puzzle',
   );
 }

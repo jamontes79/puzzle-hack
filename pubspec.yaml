@@ -33,10 +33,13 @@ dependencies:
 
 dev_dependencies:
   bloc_test: ^9.0.2
+  fake_cloud_firestore: ^1.2.0
+  firebase_auth_mocks: ^0.8.2
   flutter_test:
     sdk: flutter
   injectable_generator: ^1.5.3
-  mocktail: ^0.2.0
+  mockingjay: ^0.2.0
+  remove_from_coverage: ^2.0.0
   very_good_analysis: ^2.4.0
 dependency_overrides:
   analyzer: ^3.2.0

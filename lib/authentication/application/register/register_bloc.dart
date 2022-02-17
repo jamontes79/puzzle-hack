@@ -64,6 +64,10 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
     try {
       newState = state.copyWith(
         password: Password(event.password),
+        errorConfirmPassword: _comparePasswords(
+          event.password,
+          event.confirmPassword,
+        ),
         validating: false,
         errorEmail: false,
         successful: false,
@@ -72,7 +76,11 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
       newState = state.copyWith(
         password: const Password.empty(),
         validating: false,
-        errorEmail: true,
+        errorPassword: true,
+        errorConfirmPassword: _comparePasswords(
+          event.password,
+          event.confirmPassword,
+        ),
         successful: false,
         error: false,
       );
