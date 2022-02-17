@@ -39,13 +39,13 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
     late String image;
     switch (level) {
       case 1:
-        image = 'caleta.png';
-        break;
-      case 2:
         image = 'dart.png';
         break;
+      case 2:
+        image = 'caleta.png';
+        break;
       case 3:
-        image = 'dash2.png';
+        image = 'dash.png';
         break;
     }
     return image;
