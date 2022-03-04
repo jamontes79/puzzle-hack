@@ -11,9 +11,10 @@ class SplitImageInfo {
 }
 
 class CropImage {
-  Future<List<Uint8List>> splitImage(
+  Future<List<image.Image>> _getImageParts(
     SplitImageInfo splitImageInfo,
   ) async {
+    final pieceList = <image.Image>[];
     final assetImageByteData =
         await rootBundle.load('assets/puzzles/${splitImageInfo.assetName}');
     final baseSizeImage =
@@ -24,7 +25,6 @@ class CropImage {
       final yLength =
           (baseSizeImage.height / splitImageInfo.pieceCount).round();
 
-      final pieceList = <image.Image>[];
       for (var y = 0; y < splitImageInfo.pieceCount; y++) {
         for (var x = 0; x < splitImageInfo.pieceCount; x++) {
           pieceList.add(
@@ -38,18 +38,24 @@ class CropImage {
           );
         }
       }
-
-      final outputImageList = <Uint8List>[];
-      for (final img in pieceList) {
-        outputImageList.add(
-          Uint8List.fromList(
-            image.encodePng(img),
-          ),
-        );
-      }
-
-      return outputImageList;
     }
-    return <Uint8List>[];
+    return pieceList;
+  }
+
+  Future<List<Uint8List>> splitImage(
+    SplitImageInfo splitImageInfo,
+  ) async {
+    final pieceList = await _getImageParts(splitImageInfo);
+
+    final outputImageList = <Uint8List>[];
+    for (final img in pieceList) {
+      outputImageList.add(
+        Uint8List.fromList(
+          image.encodePng(img),
+        ),
+      );
+    }
+
+    return outputImageList;
   }
 }
